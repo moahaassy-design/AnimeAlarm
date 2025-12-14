@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.anime.alarm.data.model.CharacterAssets
 
 // Warna terinspirasi Waguri (Cream/Blonde hair, soft vibes)
 val WaguriHair = Color(0xFFFBE7B2) 
@@ -23,24 +24,35 @@ val BlushColor = Color(0xFFFFB7C5)
 @Composable
 fun WaguriMascot(
     modifier: Modifier = Modifier,
-    emotion: MascotEmotion = MascotEmotion.HAPPY
+    emotion: MascotEmotion = MascotEmotion.HAPPY,
+    assets: CharacterAssets? = null
 ) {
-    // TIPS: Jika Anda punya file 'waguri.png' di res/drawable, 
-    // uncomment kode di bawah ini dan hapus Canvas!
-    /*
-    val context = LocalContext.current
-    val resourceId = context.resources.getIdentifier("waguri", "drawable", context.packageName)
-    if (resourceId != 0) {
+    if (assets != null) {
+        val imageRes = when (emotion) {
+            MascotEmotion.SLEEPY -> assets.sleepyImage
+            MascotEmotion.HAPPY -> assets.happyImage
+            MascotEmotion.ANGRY -> assets.normalImage // Fallback
+        }
+        
+        // Cek jika resource valid (bukan 0/placeholder jika kita pakai int 0)
+        // Di sini kita asumsikan CharacterRepository memberi ID drawable yang valid.
+        // Jika placeholder adalah ic_launcher, kita tampilkan itu dulu.
         Image(
-            painter = painterResource(id = resourceId),
-            contentDescription = "Waguri Kaoruko",
+            painter = painterResource(id = imageRes),
+            contentDescription = "Mascot",
             modifier = modifier
         )
-        return
+    } else {
+        // Fallback: Code-drawn Chibi Face (Default Waguri)
+        WaguriCanvas(modifier, emotion)
     }
-    */
+}
 
-    // Fallback: Code-drawn Chibi Face
+@Composable
+fun WaguriCanvas(
+    modifier: Modifier = Modifier,
+    emotion: MascotEmotion
+) {
     Canvas(modifier = modifier.size(120.dp)) {
         val w = size.width
         val h = size.height

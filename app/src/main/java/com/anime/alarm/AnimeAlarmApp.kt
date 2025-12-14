@@ -6,6 +6,7 @@ import com.anime.alarm.data.AlarmDatabase
 import com.anime.alarm.data.OfflineAlarmRepository
 import com.anime.alarm.data.AndroidAlarmScheduler
 import com.anime.alarm.data.AlarmScheduler
+import com.anime.alarm.data.repository.CharacterRepository
 
 class AnimeAlarmApp : Application() {
     lateinit var container: AppContainer
@@ -19,6 +20,7 @@ class AnimeAlarmApp : Application() {
 interface AppContainer {
     val alarmRepository: OfflineAlarmRepository
     val alarmScheduler: AlarmScheduler
+    val characterRepository: CharacterRepository
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -28,5 +30,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     
     override val alarmScheduler: AlarmScheduler by lazy {
         AndroidAlarmScheduler(context)
+    }
+
+    override val characterRepository: CharacterRepository by lazy {
+        CharacterRepository()
     }
 }

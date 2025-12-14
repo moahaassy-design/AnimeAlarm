@@ -11,18 +11,29 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 import com.anime.alarm.data.AlarmScheduler
+import com.anime.alarm.data.repository.CharacterRepository
+import com.anime.alarm.data.model.Character
+import kotlinx.coroutines.flow.combine
 
 class HomeViewModel(
     private val alarmRepository: AlarmRepository,
-    private val alarmScheduler: AlarmScheduler
+    private val alarmScheduler: AlarmScheduler,
+    private val characterRepository: CharacterRepository
 ) : ViewModel() {
     
     val homeUiState: StateFlow<HomeUiState> = 
-        alarmRepository.getAllAlarmsStream().map { HomeUiState(it) }
+        combine(
+            alarmRepository.getAllAlarmsStream(),
+            characterRepository.characters, // Watch list changes if needed
+            characterRepository.selectedCharacterId
+        ) { alarms, _, _ ->
+            // In a real app we might map ID to actual character object here
+            HomeUiState(alarms, characterRepository.getSelectedCharacter()) 
+        }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = HomeUiState()
+                initialValue = HomeUiState(currentCharacter = characterRepository.getSelectedCharacter())
             )
 
     fun toggleAlarm(alarm: Alarm, isActive: Boolean) {
@@ -46,4 +57,7 @@ class HomeViewModel(
     }
 }
 
-data class HomeUiState(val alarmList: List<Alarm> = listOf())
+data class HomeUiState(
+    val alarmList: List<Alarm> = listOf(),
+    val currentCharacter: Character? = null
+)

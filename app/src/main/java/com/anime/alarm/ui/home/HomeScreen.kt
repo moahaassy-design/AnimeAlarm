@@ -54,6 +54,7 @@ fun HomeScreen(
     ) { innerPadding ->
         HomeBody(
             alarmList = homeUiState.alarmList,
+            currentCharacter = homeUiState.currentCharacter,
             onDelete = viewModel::deleteAlarm,
             onToggle = viewModel::toggleAlarm,
             modifier = modifier.padding(innerPadding)
@@ -61,9 +62,12 @@ fun HomeScreen(
     }
 }
 
+import com.anime.alarm.data.model.Character
+
 @Composable
 fun HomeBody(
     alarmList: List<Alarm>,
+    currentCharacter: Character? = null,
     onDelete: (Alarm) -> Unit,
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
@@ -76,7 +80,8 @@ fun HomeBody(
         ) {
             WaguriMascot(
                 modifier = Modifier.size(200.dp),
-                emotion = MascotEmotion.SLEEPY
+                emotion = MascotEmotion.SLEEPY,
+                assets = currentCharacter?.assets
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(

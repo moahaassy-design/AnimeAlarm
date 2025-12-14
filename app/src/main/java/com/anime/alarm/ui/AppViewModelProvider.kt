@@ -15,7 +15,8 @@ object AppViewModelProvider {
             val app = animeAlarmApplication()
             HomeViewModel(
                 app.container.alarmRepository,
-                app.container.alarmScheduler
+                app.container.alarmScheduler,
+                app.container.characterRepository
             )
         }
         initializer {
