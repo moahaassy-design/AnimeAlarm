@@ -14,6 +14,15 @@ class AlarmReceiver : BroadcastReceiver() {
         // Tampilkan Toast sebagai indikator awal
         Toast.makeText(context, "ANIME ALARM: $message", Toast.LENGTH_LONG).show()
         
-        // TODO: Start Foreground Service to play sound & show Full Screen UI
+        // Start Foreground Service
+        val serviceIntent = Intent(context, com.anime.alarm.service.AlarmRingService::class.java).apply {
+            putExtra("ALARM_LABEL", message)
+        }
+        
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            context.startForegroundService(serviceIntent)
+        } else {
+            context.startService(serviceIntent)
+        }
     }
 }
