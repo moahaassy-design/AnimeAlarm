@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.anime.alarm.data.model.AlarmChallenge
@@ -29,32 +32,46 @@ import kotlin.math.sqrt
 fun ChallengeScreen(challenge: AlarmChallenge, onChallengeCompleted: () -> Unit) {
     val context = LocalContext.current
     
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        when (challenge) {
-            is AlarmChallenge.ShakeChallenge -> ShakeChallengeContent(challenge, onChallengeCompleted)
-            is AlarmChallenge.MathChallenge -> Text("Math Challenge (Coming Soon!)", style = MaterialTheme.typography.headlineMedium)
-            AlarmChallenge.None -> {
-                Text("No Challenge. Just dismiss.", style = MaterialTheme.typography.headlineMedium)
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = onChallengeCompleted) {
-                    Text("Dismiss Alarm")
-                }
-            }
-        }
-    }
-
-    // Stop the alarm service when ChallengeScreen is active.
-    // This assumes the service is started by the AlarmReceiver and needs to be stopped here.
-    // The service might be ringing, so we send a stop intent.
-    DisposableEffect(Unit) {
+    // Create a completion handler that stops the service and calls the callback
+    val completeAndStop = {
         val stopAlarmIntent = Intent(context, AlarmRingService::class.java).apply {
             action = AlarmRingService.ACTION_STOP
         }
         context.startService(stopAlarmIntent)
-        onDispose { }
+        onChallengeCompleted()
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.errorContainer, // Alarm context -> Reddish/Urgent
+                        MaterialTheme.colorScheme.background
+                    )
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        when (challenge) {
+            is AlarmChallenge.ShakeChallenge -> ShakeChallengeContent(challenge, completeAndStop)
+            is AlarmChallenge.MathChallenge -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Math Challenge (Coming Soon!)", style = MaterialTheme.typography.headlineMedium)
+                    Button(onClick = completeAndStop) { Text("Skip") }
+                }
+            }
+            AlarmChallenge.None -> {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("No Challenge. Just dismiss.", style = MaterialTheme.typography.headlineMedium)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(onClick = completeAndStop) {
+                        Text("Dismiss Alarm")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -81,8 +98,8 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onChallengeC
 
         val sensorEventListener = object : SensorEventListener {
             private var lastShakeTime: Long = 0
-            private val SHAKE_THRESHOLD = 800 // Adjust as needed
-            private val SHAKE_INTERVAL = 500 // Min time between shakes in ms
+            private val SHAKE_THRESHOLD = 15.0f // ~1.5g
+            private val SHAKE_INTERVAL = 300 // ms
 
             override fun onSensorChanged(event: SensorEvent?) {
                 if (event != null && event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
@@ -93,8 +110,10 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onChallengeC
                     val gForce = sqrt(x * x + y * y + z * z)
 
                     if (gForce > SHAKE_THRESHOLD && System.currentTimeMillis() - lastShakeTime > SHAKE_INTERVAL) {
+                        // Ensure it's not just gravity (9.8), but significantly more
                         shakeCount++
                         lastShakeTime = System.currentTimeMillis()
+                        
                         // Vibrate briefly on shake
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
@@ -135,7 +154,7 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onChallengeC
             Text("Challenge Complete!", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
             // Automatically complete challenge after a short delay
             LaunchedEffect(Unit) {
-                delay(1000) // Small delay for user to see "Complete"
+                delay(500)
                 onChallengeCompleted()
             }
         }
