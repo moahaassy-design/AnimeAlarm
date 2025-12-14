@@ -1,9 +1,0 @@
-To replace the default code-drawn mascot with a real image of Waguri Kaoruko:
-
-1. Obtain a PNG or JPG image of the character.
-2. Rename the file to "waguri.png" (must be lowercase, no spaces).
-3. Place the file in this folder: app/src/main/res/drawable/
-4. Rebuild the app.
-
-The app is programmed to automatically detect "R.drawable.waguri" and use it instead of the canvas drawing.
-See: app/src/main/java/com/anime/alarm/ui/components/WaguriMascot.kt
