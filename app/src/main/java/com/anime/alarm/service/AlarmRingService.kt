@@ -37,12 +37,17 @@ class AlarmRingService : Service() {
 
         val label = intent?.getStringExtra("ALARM_LABEL") ?: "Alarm"
         val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1
-        val challenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent?.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent?.getParcelableExtra("ALARM_CHALLENGE")
-        } ?: AlarmChallenge.None
+        
+        var extractedChallenge: AlarmChallenge? = null
+        if (intent != null) {
+            extractedChallenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra("ALARM_CHALLENGE") as? AlarmChallenge
+            }
+        }
+        val challenge = extractedChallenge ?: AlarmChallenge.None
         
         startForeground(NOTIFICATION_ID, buildNotification(label, alarmId, challenge))
         startRinging()
