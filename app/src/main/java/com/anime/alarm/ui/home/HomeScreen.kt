@@ -22,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anime.alarm.data.Alarm
+import com.anime.alarm.data.model.Character // <- New import
 import com.anime.alarm.ui.AppViewModelProvider
+import com.anime.alarm.ui.components.MascotEmotion // <- Moved import
+import com.anime.alarm.ui.components.WaguriMascot // <- Moved import
 import java.util.Locale
-import com.anime.alarm.ui.components.WaguriMascot
-import com.anime.alarm.ui.components.MascotEmotion
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,8 +62,6 @@ fun HomeScreen(
         )
     }
 }
-
-import com.anime.alarm.data.model.Character
 
 @Composable
 fun HomeBody(
