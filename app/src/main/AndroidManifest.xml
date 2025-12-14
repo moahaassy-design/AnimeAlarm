@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         
-        <!-- Receiver dan Service akan ditambahkan nanti saat implementasi logika -->
+        <receiver android:name=".receiver.AlarmReceiver" android:enabled="true" android:exported="false"/>
         
     </application>
 

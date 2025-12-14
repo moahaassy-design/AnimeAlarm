@@ -14,12 +14,20 @@ class AnimeAlarmApp : Application() {
     }
 }
 
+import com.anime.alarm.data.AndroidAlarmScheduler
+import com.anime.alarm.data.AlarmScheduler
+
 interface AppContainer {
     val alarmRepository: OfflineAlarmRepository
+    val alarmScheduler: AlarmScheduler
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
     override val alarmRepository: OfflineAlarmRepository by lazy {
         OfflineAlarmRepository(AlarmDatabase.getDatabase(context).alarmDao())
+    }
+    
+    override val alarmScheduler: AlarmScheduler by lazy {
+        AndroidAlarmScheduler(context)
     }
 }
