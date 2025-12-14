@@ -16,7 +16,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
-import com.anime.alarm.MainActivity
+import com.anime.alarm.MainActivity // Import MainActivity
 import com.anime.alarm.R
 import com.anime.alarm.data.model.AlarmChallenge // Import AlarmChallenge
 
@@ -49,7 +49,7 @@ class AlarmRingService : Service() {
         startVibrating()
 
         // Launch the ChallengeScreen/MainActivity
-        val fullScreenIntent = Intent(this, MainActivity::class.java).apply {
+        var fullScreenIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("ALARM_ID", alarmId)
             putExtra("ALARM_LABEL", label)
             putExtra("ALARM_CHALLENGE", challenge)

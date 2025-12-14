@@ -14,7 +14,7 @@ sealed class AlarmChallenge : Parcelable {
 }
 
 enum class MathDifficulty : Parcelable {
-    @Parcelize EASY, 
-    @Parcelize MEDIUM, 
-    @Parcelize HARD
+    EASY, 
+    MEDIUM, 
+    HARD
 }

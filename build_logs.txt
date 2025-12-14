@@ -1,301 +1,309 @@
-build	Set up job	﻿2025-12-14T17:31:04.0993075Z Current runner version: '2.329.0'
-build	Set up job	2025-12-14T17:31:04.1020446Z ##[group]Runner Image Provisioner
-build	Set up job	2025-12-14T17:31:04.1021297Z Hosted Compute Agent
-build	Set up job	2025-12-14T17:31:04.1021852Z Version: 20251202.455
-build	Set up job	2025-12-14T17:31:04.1022505Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
-build	Set up job	2025-12-14T17:31:04.1023219Z Build Date: 2025-12-02T15:56:59Z
-build	Set up job	2025-12-14T17:31:04.1023849Z Worker ID: {12ed5e00-d76f-4927-8a7d-c570fffd573d}
-build	Set up job	2025-12-14T17:31:04.1024754Z ##[endgroup]
-build	Set up job	2025-12-14T17:31:04.1025270Z ##[group]Operating System
-build	Set up job	2025-12-14T17:31:04.1025832Z Ubuntu
-build	Set up job	2025-12-14T17:31:04.1026263Z 24.04.3
-build	Set up job	2025-12-14T17:31:04.1026801Z LTS
-build	Set up job	2025-12-14T17:31:04.1027235Z ##[endgroup]
-build	Set up job	2025-12-14T17:31:04.1027761Z ##[group]Runner Image
-build	Set up job	2025-12-14T17:31:04.1028364Z Image: ubuntu-24.04
-build	Set up job	2025-12-14T17:31:04.1028846Z Version: 20251208.163.1
-build	Set up job	2025-12-14T17:31:04.1029835Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251208.163/images/ubuntu/Ubuntu2404-Readme.md
-build	Set up job	2025-12-14T17:31:04.1031221Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251208.163
-build	Set up job	2025-12-14T17:31:04.1032404Z ##[endgroup]
-build	Set up job	2025-12-14T17:31:04.1033520Z ##[group]GITHUB_TOKEN Permissions
-build	Set up job	2025-12-14T17:31:04.1035908Z Contents: read
-build	Set up job	2025-12-14T17:31:04.1036606Z Metadata: read
-build	Set up job	2025-12-14T17:31:04.1037086Z Packages: read
-build	Set up job	2025-12-14T17:31:04.1037580Z ##[endgroup]
-build	Set up job	2025-12-14T17:31:04.1040163Z Secret source: Actions
-build	Set up job	2025-12-14T17:31:04.1041154Z Prepare workflow directory
-build	Set up job	2025-12-14T17:31:04.1385603Z Prepare all required actions
-build	Set up job	2025-12-14T17:31:04.1425487Z Getting action download info
-build	Set up job	2025-12-14T17:31:04.5193372Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
-build	Set up job	2025-12-14T17:31:04.6161408Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
-build	Set up job	2025-12-14T17:31:05.1538360Z Download action repository 'gradle/actions@v3' (SHA:d9c87d481d55275bb5441eef3fe0e46805f9ef70)
-build	Set up job	2025-12-14T17:31:06.0825269Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
-build	Set up job	2025-12-14T17:31:06.3371716Z Complete job name: build
-build	Run actions/checkout@v4	﻿2025-12-14T17:31:06.4171341Z ##[group]Run actions/checkout@v4
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4172608Z with:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4173382Z   repository: moahaassy-design/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4174884Z   token: ***
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4175577Z   ssh-strict: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4176289Z   ssh-user: git
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4177021Z   persist-credentials: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4177849Z   clean: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4178584Z   sparse-checkout-cone-mode: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4179479Z   fetch-depth: 1
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4180202Z   fetch-tags: false
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4180927Z   show-progress: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4181664Z   lfs: false
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4182340Z   submodules: false
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4183099Z   set-safe-directory: true
-build	Run actions/checkout@v4	2025-12-14T17:31:06.4184350Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5350965Z Syncing repository: moahaassy-design/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5354246Z ##[group]Getting Git version info
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5355755Z Working directory is '/home/runner/work/AnimeAlarm/AnimeAlarm'
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5357656Z [command]/usr/bin/git version
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5404509Z git version 2.52.0
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5433593Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5449503Z Temporarily overriding HOME='/home/runner/work/_temp/7418b663-0733-4d24-9549-b887590ed456' before making global git config changes
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5452523Z Adding repository directory to the temporary git global config as a safe directory
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5462671Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AnimeAlarm/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5502920Z Deleting the contents of '/home/runner/work/AnimeAlarm/AnimeAlarm'
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5506900Z ##[group]Initializing the repository
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5511191Z [command]/usr/bin/git init /home/runner/work/AnimeAlarm/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5615631Z hint: Using 'master' as the name for the initial branch. This default branch name
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5619007Z hint: will change to "main" in Git 3.0. To configure the initial branch name
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5621528Z hint: to use in all of your new repositories, which will suppress this warning,
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5622879Z hint: call:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5623526Z hint:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5624891Z hint: 	git config --global init.defaultBranch <name>
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5626448Z hint:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5627478Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5629193Z hint: 'development'. The just-created branch can be renamed via this command:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5630508Z hint:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5631341Z hint: 	git branch -m <name>
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5632540Z hint:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5633649Z hint: Disable this message with "git config set advice.defaultBranchName false"
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5635787Z Initialized empty Git repository in /home/runner/work/AnimeAlarm/AnimeAlarm/.git/
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5638907Z [command]/usr/bin/git remote add origin https://github.com/moahaassy-design/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5671083Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5672570Z ##[group]Disabling automatic garbage collection
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5675385Z [command]/usr/bin/git config --local gc.auto 0
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5709691Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5710940Z ##[group]Setting up auth
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5717143Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-build	Run actions/checkout@v4	2025-12-14T17:31:06.5751673Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6102345Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6150200Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6380706Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6415017Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6658229Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6695822Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6697721Z ##[group]Fetching the repository
-build	Run actions/checkout@v4	2025-12-14T17:31:06.6704859Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bb2f0d5f36e928a10e372814c56549a4b603b4a6:refs/remotes/origin/main
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9448256Z From https://github.com/moahaassy-design/AnimeAlarm
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9450069Z  * [new ref]         bb2f0d5f36e928a10e372814c56549a4b603b4a6 -> origin/main
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9481945Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9482812Z ##[group]Determining the checkout info
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9484747Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9491193Z [command]/usr/bin/git sparse-checkout disable
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9534769Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9562561Z ##[group]Checking out the ref
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9567635Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9661539Z Switched to a new branch 'main'
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9663133Z branch 'main' set up to track 'origin/main'.
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9670752Z ##[endgroup]
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9709098Z [command]/usr/bin/git log -1 --format=%H
-build	Run actions/checkout@v4	2025-12-14T17:31:06.9732110Z bb2f0d5f36e928a10e372814c56549a4b603b4a6
-build	set up JDK 17	﻿2025-12-14T17:31:06.9981853Z ##[group]Run actions/setup-java@v4
-build	set up JDK 17	2025-12-14T17:31:06.9982275Z with:
-build	set up JDK 17	2025-12-14T17:31:06.9982548Z   java-version: 17
-build	set up JDK 17	2025-12-14T17:31:06.9982829Z   distribution: temurin
-build	set up JDK 17	2025-12-14T17:31:06.9983130Z   java-package: jdk
-build	set up JDK 17	2025-12-14T17:31:06.9983410Z   check-latest: false
-build	set up JDK 17	2025-12-14T17:31:06.9983886Z   server-id: github
-build	set up JDK 17	2025-12-14T17:31:06.9984396Z   server-username: GITHUB_ACTOR
-build	set up JDK 17	2025-12-14T17:31:06.9984738Z   server-password: GITHUB_TOKEN
-build	set up JDK 17	2025-12-14T17:31:06.9985072Z   overwrite-settings: true
-build	set up JDK 17	2025-12-14T17:31:06.9985381Z   job-status: success
-build	set up JDK 17	2025-12-14T17:31:06.9985811Z   token: ***
-build	set up JDK 17	2025-12-14T17:31:06.9986077Z ##[endgroup]
-build	set up JDK 17	2025-12-14T17:31:07.2062499Z ##[group]Installed distributions
-build	set up JDK 17	2025-12-14T17:31:07.2311557Z Resolved Java 17.0.17+10 from tool-cache
-build	set up JDK 17	2025-12-14T17:31:07.2312545Z Setting Java 17.0.17+10 as the default
-build	set up JDK 17	2025-12-14T17:31:07.2326519Z Creating toolchains.xml for JDK version 17 from temurin
-build	set up JDK 17	2025-12-14T17:31:07.2410418Z Writing to /home/runner/.m2/toolchains.xml
-build	set up JDK 17	2025-12-14T17:31:07.2410966Z 
-build	set up JDK 17	2025-12-14T17:31:07.2411279Z Java configuration:
-build	set up JDK 17	2025-12-14T17:31:07.2412748Z   Distribution: temurin
-build	set up JDK 17	2025-12-14T17:31:07.2413361Z   Version: 17.0.17+10
-build	set up JDK 17	2025-12-14T17:31:07.2414428Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	set up JDK 17	2025-12-14T17:31:07.2415115Z 
-build	set up JDK 17	2025-12-14T17:31:07.2415814Z ##[endgroup]
-build	set up JDK 17	2025-12-14T17:31:07.2433741Z Creating settings.xml with server-id: github
-build	set up JDK 17	2025-12-14T17:31:07.2437716Z Writing to /home/runner/.m2/settings.xml
-build	Grant execute permission for gradlew	﻿2025-12-14T17:31:07.2552765Z ##[group]Run chmod +x gradlew
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2553245Z [36;1mchmod +x gradlew[0m
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2594242Z shell: /usr/bin/bash -e {0}
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2594615Z env:
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2595016Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2595610Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Grant execute permission for gradlew	2025-12-14T17:31:07.2596064Z ##[endgroup]
-build	Setup Gradle	﻿2025-12-14T17:31:07.2844405Z ##[group]Run gradle/actions/setup-gradle@v3
-build	Setup Gradle	2025-12-14T17:31:07.2844879Z with:
-build	Setup Gradle	2025-12-14T17:31:07.2845159Z   cache-disabled: false
-build	Setup Gradle	2025-12-14T17:31:07.2845471Z   cache-read-only: false
-build	Setup Gradle	2025-12-14T17:31:07.2845776Z   cache-write-only: false
-build	Setup Gradle	2025-12-14T17:31:07.2846107Z   cache-overwrite-existing: false
-build	Setup Gradle	2025-12-14T17:31:07.2846499Z   gradle-home-cache-includes: caches
+build	Set up job	﻿2025-12-14T17:36:51.0955524Z Current runner version: '2.329.0'
+build	Set up job	2025-12-14T17:36:51.0985343Z ##[group]Runner Image Provisioner
+build	Set up job	2025-12-14T17:36:51.0986776Z Hosted Compute Agent
+build	Set up job	2025-12-14T17:36:51.0987691Z Version: 20251202.455
+build	Set up job	2025-12-14T17:36:51.0988686Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
+build	Set up job	2025-12-14T17:36:51.0990119Z Build Date: 2025-12-02T15:56:59Z
+build	Set up job	2025-12-14T17:36:51.0991207Z Worker ID: {c91a565c-e99e-4c0c-a55c-1c7a25172ff2}
+build	Set up job	2025-12-14T17:36:51.0992639Z ##[endgroup]
+build	Set up job	2025-12-14T17:36:51.0993624Z ##[group]Operating System
+build	Set up job	2025-12-14T17:36:51.0994619Z Ubuntu
+build	Set up job	2025-12-14T17:36:51.0995361Z 24.04.3
+build	Set up job	2025-12-14T17:36:51.0996268Z LTS
+build	Set up job	2025-12-14T17:36:51.0996990Z ##[endgroup]
+build	Set up job	2025-12-14T17:36:51.0997917Z ##[group]Runner Image
+build	Set up job	2025-12-14T17:36:51.0999042Z Image: ubuntu-24.04
+build	Set up job	2025-12-14T17:36:51.0999928Z Version: 20251208.163.1
+build	Set up job	2025-12-14T17:36:51.1001674Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251208.163/images/ubuntu/Ubuntu2404-Readme.md
+build	Set up job	2025-12-14T17:36:51.1004547Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251208.163
+build	Set up job	2025-12-14T17:36:51.1006542Z ##[endgroup]
+build	Set up job	2025-12-14T17:36:51.1008568Z ##[group]GITHUB_TOKEN Permissions
+build	Set up job	2025-12-14T17:36:51.1011323Z Contents: read
+build	Set up job	2025-12-14T17:36:51.1012488Z Metadata: read
+build	Set up job	2025-12-14T17:36:51.1013343Z Packages: read
+build	Set up job	2025-12-14T17:36:51.1014152Z ##[endgroup]
+build	Set up job	2025-12-14T17:36:51.1016910Z Secret source: Actions
+build	Set up job	2025-12-14T17:36:51.1018381Z Prepare workflow directory
+build	Set up job	2025-12-14T17:36:51.1396907Z Prepare all required actions
+build	Set up job	2025-12-14T17:36:51.1461249Z Getting action download info
+build	Set up job	2025-12-14T17:36:51.5084658Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+build	Set up job	2025-12-14T17:36:51.5993420Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+build	Set up job	2025-12-14T17:36:52.1834448Z Download action repository 'gradle/actions@v3' (SHA:d9c87d481d55275bb5441eef3fe0e46805f9ef70)
+build	Set up job	2025-12-14T17:36:53.1166075Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+build	Set up job	2025-12-14T17:36:53.3330261Z Complete job name: build
+build	Run actions/checkout@v4	﻿2025-12-14T17:36:53.4016559Z ##[group]Run actions/checkout@v4
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4017333Z with:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4017677Z   repository: moahaassy-design/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4018338Z   token: ***
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4018642Z   ssh-strict: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4018945Z   ssh-user: git
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4019246Z   persist-credentials: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4019639Z   clean: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4019944Z   sparse-checkout-cone-mode: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4020302Z   fetch-depth: 1
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4020594Z   fetch-tags: false
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4020888Z   show-progress: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4021196Z   lfs: false
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4021488Z   submodules: false
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4021795Z   set-safe-directory: true
+build	Run actions/checkout@v4	2025-12-14T17:36:53.4022555Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5125423Z Syncing repository: moahaassy-design/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5127496Z ##[group]Getting Git version info
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5128167Z Working directory is '/home/runner/work/AnimeAlarm/AnimeAlarm'
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5128947Z [command]/usr/bin/git version
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5194897Z git version 2.52.0
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5221618Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5236584Z Temporarily overriding HOME='/home/runner/work/_temp/5051ea81-19ea-4e0e-b7c0-e078b4571c65' before making global git config changes
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5237582Z Adding repository directory to the temporary git global config as a safe directory
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5249861Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AnimeAlarm/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5291198Z Deleting the contents of '/home/runner/work/AnimeAlarm/AnimeAlarm'
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5295356Z ##[group]Initializing the repository
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5299335Z [command]/usr/bin/git init /home/runner/work/AnimeAlarm/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5404071Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5405935Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5407311Z hint: to use in all of your new repositories, which will suppress this warning,
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5408242Z hint: call:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5408696Z hint:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5409611Z hint: 	git config --global init.defaultBranch <name>
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5410123Z hint:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5410599Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5411350Z hint: 'development'. The just-created branch can be renamed via this command:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5412152Z hint:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5412609Z hint: 	git branch -m <name>
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5412983Z hint:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5413463Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5414681Z Initialized empty Git repository in /home/runner/work/AnimeAlarm/AnimeAlarm/.git/
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5420695Z [command]/usr/bin/git remote add origin https://github.com/moahaassy-design/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5457562Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5458180Z ##[group]Disabling automatic garbage collection
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5462210Z [command]/usr/bin/git config --local gc.auto 0
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5492900Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5493534Z ##[group]Setting up auth
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5502219Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5534014Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5864670Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Run actions/checkout@v4	2025-12-14T17:36:53.5894547Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6125454Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6156619Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6396525Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6432133Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6433010Z ##[group]Fetching the repository
+build	Run actions/checkout@v4	2025-12-14T17:36:53.6440528Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5:refs/remotes/origin/main
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9276507Z From https://github.com/moahaassy-design/AnimeAlarm
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9279469Z  * [new ref]         6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5 -> origin/main
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9308291Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9308742Z ##[group]Determining the checkout info
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9310843Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9316259Z [command]/usr/bin/git sparse-checkout disable
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9357809Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9383219Z ##[group]Checking out the ref
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9386915Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9476362Z Switched to a new branch 'main'
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9478757Z branch 'main' set up to track 'origin/main'.
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9485546Z ##[endgroup]
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9520895Z [command]/usr/bin/git log -1 --format=%H
+build	Run actions/checkout@v4	2025-12-14T17:36:53.9543361Z 6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5
+build	set up JDK 17	﻿2025-12-14T17:36:53.9788142Z ##[group]Run actions/setup-java@v4
+build	set up JDK 17	2025-12-14T17:36:53.9788493Z with:
+build	set up JDK 17	2025-12-14T17:36:53.9788713Z   java-version: 17
+build	set up JDK 17	2025-12-14T17:36:53.9788951Z   distribution: temurin
+build	set up JDK 17	2025-12-14T17:36:53.9789193Z   java-package: jdk
+build	set up JDK 17	2025-12-14T17:36:53.9789431Z   check-latest: false
+build	set up JDK 17	2025-12-14T17:36:53.9789858Z   server-id: github
+build	set up JDK 17	2025-12-14T17:36:53.9790100Z   server-username: GITHUB_ACTOR
+build	set up JDK 17	2025-12-14T17:36:53.9790379Z   server-password: GITHUB_TOKEN
+build	set up JDK 17	2025-12-14T17:36:53.9790657Z   overwrite-settings: true
+build	set up JDK 17	2025-12-14T17:36:53.9790906Z   job-status: success
+build	set up JDK 17	2025-12-14T17:36:53.9791297Z   token: ***
+build	set up JDK 17	2025-12-14T17:36:53.9791517Z ##[endgroup]
+build	set up JDK 17	2025-12-14T17:36:54.1823986Z ##[group]Installed distributions
+build	set up JDK 17	2025-12-14T17:36:54.1884097Z Resolved Java 17.0.17+10 from tool-cache
+build	set up JDK 17	2025-12-14T17:36:54.1885050Z Setting Java 17.0.17+10 as the default
+build	set up JDK 17	2025-12-14T17:36:54.1897594Z Creating toolchains.xml for JDK version 17 from temurin
+build	set up JDK 17	2025-12-14T17:36:54.1973966Z Writing to /home/runner/.m2/toolchains.xml
+build	set up JDK 17	2025-12-14T17:36:54.1974542Z 
+build	set up JDK 17	2025-12-14T17:36:54.1974891Z Java configuration:
+build	set up JDK 17	2025-12-14T17:36:54.1975997Z   Distribution: temurin
+build	set up JDK 17	2025-12-14T17:36:54.1976612Z   Version: 17.0.17+10
+build	set up JDK 17	2025-12-14T17:36:54.1977464Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	set up JDK 17	2025-12-14T17:36:54.1978227Z 
+build	set up JDK 17	2025-12-14T17:36:54.1978927Z ##[endgroup]
+build	set up JDK 17	2025-12-14T17:36:54.1996027Z Creating settings.xml with server-id: github
+build	set up JDK 17	2025-12-14T17:36:54.1998270Z Writing to /home/runner/.m2/settings.xml
+build	Grant execute permission for gradlew	﻿2025-12-14T17:36:54.2108731Z ##[group]Run chmod +x gradlew
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2109150Z [36;1mchmod +x gradlew[0m
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2147940Z shell: /usr/bin/bash -e {0}
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2148248Z env:
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2148591Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2149121Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Grant execute permission for gradlew	2025-12-14T17:36:54.2149511Z ##[endgroup]
+build	Setup Gradle	﻿2025-12-14T17:36:54.2378685Z ##[group]Run gradle/actions/setup-gradle@v3
+build	Setup Gradle	2025-12-14T17:36:54.2379034Z with:
+build	Setup Gradle	2025-12-14T17:36:54.2379262Z   cache-disabled: false
+build	Setup Gradle	2025-12-14T17:36:54.2379516Z   cache-read-only: false
+build	Setup Gradle	2025-12-14T17:36:54.2379774Z   cache-write-only: false
+build	Setup Gradle	2025-12-14T17:36:54.2380039Z   cache-overwrite-existing: false
+build	Setup Gradle	2025-12-14T17:36:54.2380369Z   gradle-home-cache-includes: caches
 build	Setup Gradle	notifications
 build	Setup Gradle	
-build	Setup Gradle	2025-12-14T17:31:07.2846948Z   gradle-home-cache-cleanup: false
-build	Setup Gradle	2025-12-14T17:31:07.2847285Z   add-job-summary: always
-build	Setup Gradle	2025-12-14T17:31:07.2847620Z   add-job-summary-as-pr-comment: never
-build	Setup Gradle	2025-12-14T17:31:07.2847990Z   dependency-graph: disabled
-build	Setup Gradle	2025-12-14T17:31:07.2848340Z   dependency-graph-continue-on-failure: true
-build	Setup Gradle	2025-12-14T17:31:07.2848716Z   build-scan-publish: false
-build	Setup Gradle	2025-12-14T17:31:07.2849037Z   validate-wrappers: false
-build	Setup Gradle	2025-12-14T17:31:07.2849361Z   generate-job-summary: true
-build	Setup Gradle	2025-12-14T17:31:07.2849691Z   gradle-home-cache-strict-match: false
-build	Setup Gradle	2025-12-14T17:31:07.2850052Z   workflow-job-context: null
-build	Setup Gradle	2025-12-14T17:31:07.2850576Z   github-token: ***
-build	Setup Gradle	2025-12-14T17:31:07.2850856Z env:
-build	Setup Gradle	2025-12-14T17:31:07.2851232Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Setup Gradle	2025-12-14T17:31:07.2851813Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Setup Gradle	2025-12-14T17:31:07.2852256Z ##[endgroup]
-build	Setup Gradle	2025-12-14T17:31:11.5236147Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
-build	Setup Gradle	2025-12-14T17:31:11.5239233Z ##[group]Restore Gradle state from cache
-build	Setup Gradle	2025-12-14T17:31:11.6366047Z ##[warning]Failed to restore gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-bb2f0d5f36e928a10e372814c56549a4b603b4a6: Error: Cache service responded with 400
-build	Setup Gradle	2025-12-14T17:31:11.6428892Z Gradle User Home cache not found. Will initialize empty.
-build	Setup Gradle	2025-12-14T17:31:11.6429907Z ##[endgroup]
-build	Build with Gradle	﻿2025-12-14T17:31:11.6546861Z ##[group]Run ./gradlew assembleDebug testDebugUnitTest
-build	Build with Gradle	2025-12-14T17:31:11.6547301Z [36;1m./gradlew assembleDebug testDebugUnitTest[0m
-build	Build with Gradle	2025-12-14T17:31:11.6579480Z shell: /usr/bin/bash -e {0}
-build	Build with Gradle	2025-12-14T17:31:11.6579732Z env:
-build	Build with Gradle	2025-12-14T17:31:11.6580023Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Build with Gradle	2025-12-14T17:31:11.6580496Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
-build	Build with Gradle	2025-12-14T17:31:11.6580884Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
-build	Build with Gradle	2025-12-14T17:31:11.6581327Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
-build	Build with Gradle	2025-12-14T17:31:11.6581603Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
-build	Build with Gradle	2025-12-14T17:31:11.6582018Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
-build	Build with Gradle	2025-12-14T17:31:11.6582531Z   DEVELOCITY_AUTO_INJECTION_CUSTOM_VALUE: gradle-actions
-build	Build with Gradle	2025-12-14T17:31:11.6582894Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
-build	Build with Gradle	2025-12-14T17:31:11.6583138Z ##[endgroup]
-build	Build with Gradle	2025-12-14T17:31:12.9400961Z Downloading https://services.gradle.org/distributions/gradle-8.4-bin.zip
-build	Build with Gradle	2025-12-14T17:31:18.2581955Z ............10%............20%.............30%............40%.............50%............60%.............70%............80%.............90%............100%
-build	Build with Gradle	2025-12-14T17:31:19.8145479Z 
-build	Build with Gradle	2025-12-14T17:31:19.8147376Z Welcome to Gradle 8.4!
-build	Build with Gradle	2025-12-14T17:31:19.8147704Z 
-build	Build with Gradle	2025-12-14T17:31:19.8149118Z Here are the highlights of this release:
-build	Build with Gradle	2025-12-14T17:31:19.8151763Z  - Compiling and testing with Java 21
-build	Build with Gradle	2025-12-14T17:31:19.8161871Z  - Faster Java compilation on Windows
-build	Build with Gradle	2025-12-14T17:31:19.8163713Z  - Role focused dependency configurations creation
-build	Build with Gradle	2025-12-14T17:31:19.8164430Z 
-build	Build with Gradle	2025-12-14T17:31:19.8165766Z For more details see https://docs.gradle.org/8.4/release-notes.html
-build	Build with Gradle	2025-12-14T17:31:19.8167031Z 
-build	Build with Gradle	2025-12-14T17:31:20.2981216Z Starting a Gradle Daemon (subsequent builds will be faster)
-build	Build with Gradle	2025-12-14T17:33:27.1052832Z > Task :app:preBuild UP-TO-DATE
-build	Build with Gradle	2025-12-14T17:33:27.1053422Z > Task :app:preDebugBuild UP-TO-DATE
-build	Build with Gradle	2025-12-14T17:33:27.1054495Z > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
-build	Build with Gradle	2025-12-14T17:33:27.1066262Z > Task :app:checkKotlinGradlePluginConfigurationErrors
-build	Build with Gradle	2025-12-14T17:33:57.0980926Z > Task :app:checkDebugAarMetadata
-build	Build with Gradle	2025-12-14T17:34:45.8990887Z > Task :app:generateDebugResValues
-build	Build with Gradle	2025-12-14T17:34:45.9981114Z > Task :app:mapDebugSourceSetPaths
-build	Build with Gradle	2025-12-14T17:34:45.9982053Z > Task :app:generateDebugResources
-build	Build with Gradle	2025-12-14T17:34:47.4979680Z > Task :app:packageDebugResources
-build	Build with Gradle	2025-12-14T17:34:47.5980271Z > Task :app:mergeDebugResources
-build	Build with Gradle	2025-12-14T17:34:50.1005728Z > Task :app:createDebugCompatibleScreenManifests
-build	Build with Gradle	2025-12-14T17:34:50.1006951Z > Task :app:extractDeepLinksDebug
-build	Build with Gradle	2025-12-14T17:34:50.2981637Z > Task :app:parseDebugLocalResources
-build	Build with Gradle	2025-12-14T17:34:50.3984492Z > Task :app:processDebugMainManifest
-build	Build with Gradle	2025-12-14T17:34:50.4981144Z > Task :app:processDebugManifest
-build	Build with Gradle	2025-12-14T17:34:59.5982913Z > Task :app:javaPreCompileDebug
-build	Build with Gradle	2025-12-14T17:34:59.6007848Z > Task :app:mergeDebugShaders
-build	Build with Gradle	2025-12-14T17:34:59.6017499Z > Task :app:compileDebugShaders NO-SOURCE
-build	Build with Gradle	2025-12-14T17:34:59.6024639Z > Task :app:generateDebugAssets UP-TO-DATE
-build	Build with Gradle	2025-12-14T17:34:59.6982613Z > Task :app:mergeDebugAssets
-build	Build with Gradle	2025-12-14T17:34:59.6983453Z > Task :app:compressDebugAssets
-build	Build with Gradle	2025-12-14T17:35:01.6980402Z > Task :app:desugarDebugFileDependencies
-build	Build with Gradle	2025-12-14T17:35:01.6986388Z > Task :app:mergeDebugJniLibFolders
-build	Build with Gradle	2025-12-14T17:35:01.7979862Z > Task :app:mergeDebugNativeLibs NO-SOURCE
-build	Build with Gradle	2025-12-14T17:35:01.7980365Z > Task :app:stripDebugDebugSymbols NO-SOURCE
-build	Build with Gradle	2025-12-14T17:35:03.5980147Z > Task :app:checkDebugDuplicateClasses
-build	Build with Gradle	2025-12-14T17:35:03.9994655Z > Task :app:validateSigningDebug
-build	Build with Gradle	2025-12-14T17:35:20.4986805Z > Task :app:processDebugManifestForPackage
-build	Build with Gradle	2025-12-14T17:35:33.9980364Z > Task :app:mergeExtDexDebug
-build	Build with Gradle	2025-12-14T17:35:49.1988378Z > Task :app:writeDebugAppMetadata
-build	Build with Gradle	2025-12-14T17:35:49.1988905Z > Task :app:mergeLibDexDebug
-build	Build with Gradle	2025-12-14T17:35:49.1989342Z > Task :app:writeDebugSigningConfigVersions
-build	Build with Gradle	2025-12-14T17:35:49.1989843Z > Task :app:preDebugUnitTestBuild UP-TO-DATE
-build	Build with Gradle	2025-12-14T17:35:49.2983676Z > Task :app:javaPreCompileDebugUnitTest
-build	Build with Gradle	2025-12-14T17:35:49.4980001Z > Task :app:processDebugResources
-build	Build with Gradle	2025-12-14T17:36:03.6983759Z 
-build	Build with Gradle	2025-12-14T17:36:03.7021361Z > Task :app:kspDebugKotlin FAILED
-build	Build with Gradle	2025-12-14T17:36:03.7046000Z e: [ksp] /home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/Alarm.kt:18: Cannot figure out how to save this field into database. You can consider adding a type converter for it.
-build	Build with Gradle	2025-12-14T17:36:03.7048173Z e: [ksp] /home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/Alarm.kt:18: Cannot figure out how to read this field from a cursor.
-build	Build with Gradle	2025-12-14T17:36:03.7049816Z e: Error occurred in KSP, check log for detail
-build	Build with Gradle	2025-12-14T17:36:03.7979601Z 
-build	Build with Gradle	2025-12-14T17:36:03.7980549Z FAILURE: Build failed with an exception.
-build	Build with Gradle	2025-12-14T17:36:03.7981203Z 
-build	Build with Gradle	2025-12-14T17:36:03.8006121Z * What went wrong:
-build	Build with Gradle	2025-12-14T17:36:03.8007050Z Execution failed for task ':app:kspDebugKotlin'.
-build	Build with Gradle	2025-12-14T17:36:03.8008232Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
-build	Build with Gradle	2025-12-14T17:36:03.8010007Z    > Compilation error. See log for more details
-build	Build with Gradle	2025-12-14T17:36:03.8010374Z 
-build	Build with Gradle	2025-12-14T17:36:03.8010510Z * Try:
-build	Build with Gradle	2025-12-14T17:36:03.8010904Z > Run with --stacktrace option to get the stack trace.
-build	Build with Gradle	2025-12-14T17:36:03.8011489Z > Run with --info or --debug option to get more log output.
-build	Build with Gradle	2025-12-14T17:36:03.8026224Z > Run with --scan to get full insights.
-build	Build with Gradle	2025-12-14T17:36:03.8026746Z > Get more help at https://help.gradle.org.
-build	Build with Gradle	2025-12-14T17:36:03.8027042Z 
-build	Build with Gradle	2025-12-14T17:36:03.8027157Z BUILD FAILED in 4m 52s
-build	Build with Gradle	2025-12-14T17:36:03.8027478Z 27 actionable tasks: 27 executed
-build	Build with Gradle	2025-12-14T17:36:04.3447572Z ##[error]Process completed with exit code 1.
-build	Post Setup Gradle	﻿2025-12-14T17:36:04.3585137Z Post job cleanup.
-build	Post Setup Gradle	2025-12-14T17:36:04.6184374Z In post-action step
-build	Post Setup Gradle	2025-12-14T17:36:04.6195338Z Stopping all Gradle daemons before saving Gradle User Home state
-build	Post Setup Gradle	2025-12-14T17:36:04.6196800Z Stopping Gradle daemons for /home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4
-build	Post Setup Gradle	2025-12-14T17:36:04.6216797Z [command]/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4/bin/gradle --stop
-build	Post Setup Gradle	2025-12-14T17:36:05.5703523Z Stopping Daemon(s)
-build	Post Setup Gradle	2025-12-14T17:36:05.5705091Z 1 Daemon stopped
-build	Post Setup Gradle	2025-12-14T17:36:05.5846169Z ##[group]Caching Gradle state
-build	Post Setup Gradle	2025-12-14T17:36:05.6222416Z Caching generated-gradle-jars with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-api-8.4.jar' and cache key: gradle-generated-gradle-jars-v1-1a83665c481822ee3817bdf1f75747ae
-build	Post Setup Gradle	2025-12-14T17:36:05.6232307Z Caching generated-gradle-jars with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-kotlin-dsl-extensions-8.4.jar' and cache key: gradle-generated-gradle-jars-v1-d75b4744b9d265c82f2e8033a6ad7da2
-build	Post Setup Gradle	2025-12-14T17:36:05.6277896Z Caching wrapper-zips with path '/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim' and cache key: gradle-wrapper-zips-v1-f82d94dd741812d9afc7aad8d4ab116c
-build	Post Setup Gradle	2025-12-14T17:36:05.6507625Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:05.6509697Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:05.6597610Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:05.8637360Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-kotlin-dsl-extensions-8.4.jar' and key: gradle-generated-gradle-jars-v1-d75b4744b9d265c82f2e8033a6ad7da2: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0hfU+aQAAAABoaZfwtustSJZxm4hVzRDHRE0yRURHRTA0MTAARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:06.4999222Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-api-8.4.jar' and key: gradle-generated-gradle-jars-v1-1a83665c481822ee3817bdf1f75747ae: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0hvU+aQAAAAD6iUDkH46sSq8joO3P9nxtRE0yRURHRTAxMTYARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:06.5656818Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim' and key: gradle-wrapper-zips-v1-f82d94dd741812d9afc7aad8d4ab116c: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0hvU+aQAAAAD63UFHIGFWQYIxm0f6ewSeRE0yRURHRTA5MTMARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:06.6175470Z Caching dependencies with path '/home/runner/.gradle/caches/modules-*/files-*/*/*/*/*' and cache key: gradle-dependencies-v1-67b0354ec19f788eaf85faebe2149812
-build	Post Setup Gradle	2025-12-14T17:36:06.6677092Z Caching instrumented-jars with path '/home/runner/.gradle/caches/jars-*/*/' and cache key: gradle-instrumented-jars-v1-01f04ebece818f9344af5e655a58a732
-build	Post Setup Gradle	2025-12-14T17:36:06.6920187Z Caching kotlin-dsl with path '/home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/
-build	Post Setup Gradle	2025-12-14T17:36:06.6921617Z /home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/' and cache key: gradle-kotlin-dsl-v1-93a0651873229e63fafe3dd4087514c4
-build	Post Setup Gradle	2025-12-14T17:36:06.7367270Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:06.7926173Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:06.8351499Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/
-build	Post Setup Gradle	/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/' and key: gradle-kotlin-dsl-v1-93a0651873229e63fafe3dd4087514c4: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0hvU+aQAAAAA/T3bMkGJsQ7nTiPqAwKmGRE0yRURHRTEwMDcARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:07.1150404Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:08.2059612Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/modules-*/files-*/*/*/*/*' and key: gradle-dependencies-v1-67b0354ec19f788eaf85faebe2149812: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0iPU+aQAAAAB59TjQhQkZTawWV1lU4BL6RE0yRURHRTA3MTIARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:08.3898987Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/jars-*/*/' and key: gradle-instrumented-jars-v1-01f04ebece818f9344af5e655a58a732: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0iPU+aQAAAAD3e4HCLrz4RqVFRfo5wnsRRE0yRURHRTA3MTIARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:08.4882687Z Caching Gradle User Home with cache key: gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-bb2f0d5f36e928a10e372814c56549a4b603b4a6
-build	Post Setup Gradle	2025-12-14T17:36:08.4967722Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
-build	Post Setup Gradle	2025-12-14T17:36:09.0704477Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle' and key: gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-bb2f0d5f36e928a10e372814c56549a4b603b4a6: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>0ifU+aQAAAABCJPM2q/c0QqMli/hTK+mcRE0yRURHRTA0MjAARWRnZQ==
-build	Post Setup Gradle	2025-12-14T17:36:09.0708939Z ##[endgroup]
-build	Post Setup Gradle	2025-12-14T17:36:09.0709283Z Generating Job Summary
-build	Post Setup Gradle	2025-12-14T17:36:09.0723037Z Completed post-action step
-build	Post set up JDK 17	﻿2025-12-14T17:36:09.0900993Z Post job cleanup.
-build	Post Run actions/checkout@v4	﻿2025-12-14T17:36:09.2701569Z Post job cleanup.
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3671906Z [command]/usr/bin/git version
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3709419Z git version 2.52.0
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3754640Z Temporarily overriding HOME='/home/runner/work/_temp/bbab3e31-eb3f-4c82-bd4d-665ea8c98c71' before making global git config changes
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3755901Z Adding repository directory to the temporary git global config as a safe directory
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3761589Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AnimeAlarm/AnimeAlarm
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3802212Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.3839177Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4092807Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4117530Z http.https://github.com/.extraheader
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4130919Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4165667Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4403257Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
-build	Post Run actions/checkout@v4	2025-12-14T17:36:09.4437652Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
-build	Complete job	﻿2025-12-14T17:36:09.4775697Z Cleaning up orphan processes
+build	Setup Gradle	2025-12-14T17:36:54.2380746Z   gradle-home-cache-cleanup: false
+build	Setup Gradle	2025-12-14T17:36:54.2381027Z   add-job-summary: always
+build	Setup Gradle	2025-12-14T17:36:54.2381299Z   add-job-summary-as-pr-comment: never
+build	Setup Gradle	2025-12-14T17:36:54.2381593Z   dependency-graph: disabled
+build	Setup Gradle	2025-12-14T17:36:54.2381886Z   dependency-graph-continue-on-failure: true
+build	Setup Gradle	2025-12-14T17:36:54.2382437Z   build-scan-publish: false
+build	Setup Gradle	2025-12-14T17:36:54.2382739Z   validate-wrappers: false
+build	Setup Gradle	2025-12-14T17:36:54.2382993Z   generate-job-summary: true
+build	Setup Gradle	2025-12-14T17:36:54.2383276Z   gradle-home-cache-strict-match: false
+build	Setup Gradle	2025-12-14T17:36:54.2383576Z   workflow-job-context: null
+build	Setup Gradle	2025-12-14T17:36:54.2384038Z   github-token: ***
+build	Setup Gradle	2025-12-14T17:36:54.2384253Z env:
+build	Setup Gradle	2025-12-14T17:36:54.2384568Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Setup Gradle	2025-12-14T17:36:54.2385062Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Setup Gradle	2025-12-14T17:36:54.2385443Z ##[endgroup]
+build	Setup Gradle	2025-12-14T17:36:55.2803267Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+build	Setup Gradle	2025-12-14T17:36:55.2805905Z ##[group]Restore Gradle state from cache
+build	Setup Gradle	2025-12-14T17:36:55.3954571Z ##[warning]Failed to restore gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5: Error: Cache service responded with 400
+build	Setup Gradle	2025-12-14T17:36:55.4016027Z Gradle User Home cache not found. Will initialize empty.
+build	Setup Gradle	2025-12-14T17:36:55.4017093Z ##[endgroup]
+build	Build with Gradle	﻿2025-12-14T17:36:55.4135290Z ##[group]Run ./gradlew assembleDebug testDebugUnitTest
+build	Build with Gradle	2025-12-14T17:36:55.4135734Z [36;1m./gradlew assembleDebug testDebugUnitTest[0m
+build	Build with Gradle	2025-12-14T17:36:55.4168041Z shell: /usr/bin/bash -e {0}
+build	Build with Gradle	2025-12-14T17:36:55.4168303Z env:
+build	Build with Gradle	2025-12-14T17:36:55.4168597Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Build with Gradle	2025-12-14T17:36:55.4169072Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+build	Build with Gradle	2025-12-14T17:36:55.4169464Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+build	Build with Gradle	2025-12-14T17:36:55.4169939Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+build	Build with Gradle	2025-12-14T17:36:55.4170212Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+build	Build with Gradle	2025-12-14T17:36:55.4170631Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+build	Build with Gradle	2025-12-14T17:36:55.4171115Z   DEVELOCITY_AUTO_INJECTION_CUSTOM_VALUE: gradle-actions
+build	Build with Gradle	2025-12-14T17:36:55.4171426Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+build	Build with Gradle	2025-12-14T17:36:55.4171676Z ##[endgroup]
+build	Build with Gradle	2025-12-14T17:36:55.7875656Z Downloading https://services.gradle.org/distributions/gradle-8.4-bin.zip
+build	Build with Gradle	2025-12-14T17:36:59.2087172Z ............10%............20%.............30%............40%.............50%............60%.............70%............80%.............90%............100%
+build	Build with Gradle	2025-12-14T17:37:00.3765786Z 
+build	Build with Gradle	2025-12-14T17:37:00.3766877Z Welcome to Gradle 8.4!
+build	Build with Gradle	2025-12-14T17:37:00.3767698Z 
+build	Build with Gradle	2025-12-14T17:37:00.3768428Z Here are the highlights of this release:
+build	Build with Gradle	2025-12-14T17:37:00.3771717Z  - Compiling and testing with Java 21
+build	Build with Gradle	2025-12-14T17:37:00.3773934Z  - Faster Java compilation on Windows
+build	Build with Gradle	2025-12-14T17:37:00.3774643Z  - Role focused dependency configurations creation
+build	Build with Gradle	2025-12-14T17:37:00.3776316Z 
+build	Build with Gradle	2025-12-14T17:37:00.3776783Z For more details see https://docs.gradle.org/8.4/release-notes.html
+build	Build with Gradle	2025-12-14T17:37:00.3777397Z 
+build	Build with Gradle	2025-12-14T17:37:00.5720048Z Starting a Gradle Daemon (subsequent builds will be faster)
+build	Build with Gradle	2025-12-14T17:38:57.5741838Z > Task :app:preBuild UP-TO-DATE
+build	Build with Gradle	2025-12-14T17:38:57.5751613Z > Task :app:preDebugBuild UP-TO-DATE
+build	Build with Gradle	2025-12-14T17:38:57.5759713Z > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+build	Build with Gradle	2025-12-14T17:38:57.5761748Z > Task :app:checkKotlinGradlePluginConfigurationErrors
+build	Build with Gradle	2025-12-14T17:39:27.5718439Z > Task :app:checkDebugAarMetadata
+build	Build with Gradle	2025-12-14T17:40:20.1744346Z > Task :app:generateDebugResValues
+build	Build with Gradle	2025-12-14T17:40:20.2726786Z > Task :app:mapDebugSourceSetPaths
+build	Build with Gradle	2025-12-14T17:40:20.2727797Z > Task :app:generateDebugResources
+build	Build with Gradle	2025-12-14T17:40:21.1718185Z > Task :app:packageDebugResources
+build	Build with Gradle	2025-12-14T17:40:21.7719359Z > Task :app:mergeDebugResources
+build	Build with Gradle	2025-12-14T17:40:22.0746212Z > Task :app:createDebugCompatibleScreenManifests
+build	Build with Gradle	2025-12-14T17:40:22.0772841Z > Task :app:extractDeepLinksDebug
+build	Build with Gradle	2025-12-14T17:40:22.2720258Z > Task :app:parseDebugLocalResources
+build	Build with Gradle	2025-12-14T17:40:22.4718149Z > Task :app:processDebugMainManifest
+build	Build with Gradle	2025-12-14T17:40:22.5718021Z > Task :app:processDebugManifest
+build	Build with Gradle	2025-12-14T17:40:31.4717630Z > Task :app:javaPreCompileDebug
+build	Build with Gradle	2025-12-14T17:40:31.5726471Z > Task :app:mergeDebugShaders
+build	Build with Gradle	2025-12-14T17:40:31.5727044Z > Task :app:compileDebugShaders NO-SOURCE
+build	Build with Gradle	2025-12-14T17:40:31.5753008Z > Task :app:generateDebugAssets UP-TO-DATE
+build	Build with Gradle	2025-12-14T17:40:31.5753529Z > Task :app:mergeDebugAssets
+build	Build with Gradle	2025-12-14T17:40:31.5753921Z > Task :app:compressDebugAssets
+build	Build with Gradle	2025-12-14T17:40:33.5718929Z > Task :app:desugarDebugFileDependencies
+build	Build with Gradle	2025-12-14T17:40:33.5721903Z > Task :app:processDebugManifestForPackage
+build	Build with Gradle	2025-12-14T17:40:33.5722786Z > Task :app:checkDebugDuplicateClasses
+build	Build with Gradle	2025-12-14T17:41:03.5718288Z > Task :app:processDebugResources
+build	Build with Gradle	2025-12-14T17:41:05.2718756Z > Task :app:mergeExtDexDebug
+build	Build with Gradle	2025-12-14T17:41:27.0737137Z > Task :app:mergeLibDexDebug
+build	Build with Gradle	2025-12-14T17:41:27.0737703Z > Task :app:mergeDebugJniLibFolders
+build	Build with Gradle	2025-12-14T17:41:27.1727151Z > Task :app:mergeDebugNativeLibs NO-SOURCE
+build	Build with Gradle	2025-12-14T17:41:27.1727765Z > Task :app:stripDebugDebugSymbols NO-SOURCE
+build	Build with Gradle	2025-12-14T17:41:27.9724965Z > Task :app:validateSigningDebug
+build	Build with Gradle	2025-12-14T17:41:27.9725826Z > Task :app:writeDebugAppMetadata
+build	Build with Gradle	2025-12-14T17:41:27.9726484Z > Task :app:writeDebugSigningConfigVersions
+build	Build with Gradle	2025-12-14T17:41:27.9727781Z > Task :app:preDebugUnitTestBuild UP-TO-DATE
+build	Build with Gradle	2025-12-14T17:41:27.9728455Z > Task :app:javaPreCompileDebugUnitTest
+build	Build with Gradle	2025-12-14T17:41:32.1752414Z > Task :app:kspDebugKotlin
+build	Build with Gradle	2025-12-14T17:41:39.7724796Z 
+build	Build with Gradle	2025-12-14T17:41:39.7727053Z > Task :app:compileDebugKotlin FAILED
+build	Build with Gradle	2025-12-14T17:41:39.7779961Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/AlarmDatabase.kt:19:17 Unresolved reference: Room
+build	Build with Gradle	2025-12-14T17:41:39.7783297Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/AlarmDatabase.kt:22:40 Unresolved reference: it
+build	Build with Gradle	2025-12-14T17:41:39.7787630Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/model/AlarmChallenge.kt:17:5 This annotation is not applicable to target 'enum entry'
+build	Build with Gradle	2025-12-14T17:41:39.7791103Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/model/AlarmChallenge.kt:18:5 This annotation is not applicable to target 'enum entry'
+build	Build with Gradle	2025-12-14T17:41:39.7806659Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/data/model/AlarmChallenge.kt:19:5 This annotation is not applicable to target 'enum entry'
+build	Build with Gradle	2025-12-14T17:41:39.7808683Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/service/AlarmRingService.kt:19:24 Unresolved reference: MainActivity
+build	Build with Gradle	2025-12-14T17:41:39.7810632Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/service/AlarmRingService.kt:52:45 Unresolved reference: MainActivity
+build	Build with Gradle	2025-12-14T17:41:39.7812662Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/service/AlarmRingService.kt:56:13 Val cannot be reassigned
+build	Build with Gradle	2025-12-14T17:41:39.7814583Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/service/AlarmRingService.kt:131:35 Unresolved reference: MainActivity
+build	Build with Gradle	2025-12-14T17:41:39.7816529Z e: file:///home/runner/work/AnimeAlarm/AnimeAlarm/app/src/main/java/com/anime/alarm/ui/entry/AlarmEntryScreen.kt:115:140 Unresolved reference: KeyboardType
+build	Build with Gradle	2025-12-14T17:41:39.9717599Z 
+build	Build with Gradle	2025-12-14T17:41:39.9722143Z FAILURE: Build failed with an exception.
+build	Build with Gradle	2025-12-14T17:41:39.9724705Z 28 actionable tasks: 28 executed
+build	Build with Gradle	2025-12-14T17:41:39.9726342Z 
+build	Build with Gradle	2025-12-14T17:41:39.9727694Z * What went wrong:
+build	Build with Gradle	2025-12-14T17:41:39.9729350Z Execution failed for task ':app:compileDebugKotlin'.
+build	Build with Gradle	2025-12-14T17:41:39.9731681Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+build	Build with Gradle	2025-12-14T17:41:39.9739833Z    > Compilation error. See log for more details
+build	Build with Gradle	2025-12-14T17:41:39.9740159Z 
+build	Build with Gradle	2025-12-14T17:41:39.9740264Z * Try:
+build	Build with Gradle	2025-12-14T17:41:39.9741553Z > Run with --stacktrace option to get the stack trace.
+build	Build with Gradle	2025-12-14T17:41:39.9773198Z > Run with --info or --debug option to get more log output.
+build	Build with Gradle	2025-12-14T17:41:39.9774351Z > Run with --scan to get full insights.
+build	Build with Gradle	2025-12-14T17:41:39.9775079Z > Get more help at https://help.gradle.org.
+build	Build with Gradle	2025-12-14T17:41:39.9775452Z 
+build	Build with Gradle	2025-12-14T17:41:39.9775582Z BUILD FAILED in 4m 44s
+build	Build with Gradle	2025-12-14T17:41:40.4604418Z ##[error]Process completed with exit code 1.
+build	Post Setup Gradle	﻿2025-12-14T17:41:40.4746776Z Post job cleanup.
+build	Post Setup Gradle	2025-12-14T17:41:40.7241661Z In post-action step
+build	Post Setup Gradle	2025-12-14T17:41:40.7249757Z Stopping all Gradle daemons before saving Gradle User Home state
+build	Post Setup Gradle	2025-12-14T17:41:40.7250864Z Stopping Gradle daemons for /home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4
+build	Post Setup Gradle	2025-12-14T17:41:40.7269287Z [command]/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim/gradle-8.4/bin/gradle --stop
+build	Post Setup Gradle	2025-12-14T17:41:41.6362413Z Stopping Daemon(s)
+build	Post Setup Gradle	2025-12-14T17:41:41.6462595Z 1 Daemon stopped
+build	Post Setup Gradle	2025-12-14T17:41:41.6601904Z ##[group]Caching Gradle state
+build	Post Setup Gradle	2025-12-14T17:41:41.6945658Z Caching generated-gradle-jars with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-api-8.4.jar' and cache key: gradle-generated-gradle-jars-v1-1a83665c481822ee3817bdf1f75747ae
+build	Post Setup Gradle	2025-12-14T17:41:41.6954674Z Caching generated-gradle-jars with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-kotlin-dsl-extensions-8.4.jar' and cache key: gradle-generated-gradle-jars-v1-d75b4744b9d265c82f2e8033a6ad7da2
+build	Post Setup Gradle	2025-12-14T17:41:41.6998168Z Caching wrapper-zips with path '/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim' and cache key: gradle-wrapper-zips-v1-f82d94dd741812d9afc7aad8d4ab116c
+build	Post Setup Gradle	2025-12-14T17:41:41.7209954Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:41.7237711Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:41.7283513Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:41.8628813Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-kotlin-dsl-extensions-8.4.jar' and key: gradle-generated-gradle-jars-v1-d75b4744b9d265c82f2e8033a6ad7da2: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>01fY+aQAAAAB7UuBbBeebQZtWGTbg15eWRE0yRURHRTA4MTMARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:42.4344600Z Caching dependencies with path '/home/runner/.gradle/caches/modules-*/files-*/*/*/*/*' and cache key: gradle-dependencies-v1-967d15c2f7230c844b72d5ecfc33c61e
+build	Post Setup Gradle	2025-12-14T17:41:42.5913826Z Caching instrumented-jars with path '/home/runner/.gradle/caches/jars-*/*/' and cache key: gradle-instrumented-jars-v1-d44a4ffb3c382604f640ddd5b2806e69
+build	Post Setup Gradle	2025-12-14T17:41:42.6249861Z Caching kotlin-dsl with path '/home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/
+build	Post Setup Gradle	2025-12-14T17:41:42.6251109Z /home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/' and cache key: gradle-kotlin-dsl-v1-2629f10b5ae405f457cde5f484b264c5
+build	Post Setup Gradle	2025-12-14T17:41:42.6418035Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/wrapper/dists/gradle-8.4-bin/1w5dpkrfk8irigvoxmyhowfim' and key: gradle-wrapper-zips-v1-f82d94dd741812d9afc7aad8d4ab116c: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>01vY+aQAAAAA43Z8E0foASba1y5mU92nmRE0yRURHRTEwMDcARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:42.6826899Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/8.4/generated-gradle-jars/gradle-api-8.4.jar' and key: gradle-generated-gradle-jars-v1-1a83665c481822ee3817bdf1f75747ae: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>01vY+aQAAAADzZw1x2Q0jSZlj8dPVl5k1RE0yRURHRTEwMTUARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:42.7426414Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:42.8016702Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:42.9920633Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/
+build	Post Setup Gradle	/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/' and key: gradle-kotlin-dsl-v1-2629f10b5ae405f457cde5f484b264c5: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>01vY+aQAAAACOyxU2mB0MTpCG2JOuyyiyRE0yRURHRTAxMTQARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:43.1248415Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:44.1657576Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/modules-*/files-*/*/*/*/*' and key: gradle-dependencies-v1-967d15c2f7230c844b72d5ecfc33c61e: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>02PY+aQAAAADTA4I9CDYeRqZD3w1N8dcTRE0yRURHRTEwMTYARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:44.3618838Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches/jars-*/*/' and key: gradle-instrumented-jars-v1-d44a4ffb3c382604f640ddd5b2806e69: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>02PY+aQAAAAArB0WA+uAcQqZsEpRnbGhoRE0yRURHRTA0MjEARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:44.4627555Z Caching Gradle User Home with cache key: gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5
+build	Post Setup Gradle	2025-12-14T17:41:44.4716885Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/AnimeAlarm/AnimeAlarm --files-from manifest.txt --use-compress-program zstdmt
+build	Post Setup Gradle	2025-12-14T17:41:45.0504154Z ##[warning]Failed to save cache entry with path '/home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle' and key: gradle-home-v1|Linux|build[cf940f3ebadc02090f040e056cc1a147]-6a9ea9a89455af74cbf6ee2f3b3fd28789f46fd5: Error: <h2>Our services aren't available right now</h2><p>We're working to restore all services as soon as possible. Please check back soon.</p>02fY+aQAAAAARdvN3VCG4RLghDnEmZKBLRE0yRURHRTA0MDgARWRnZQ==
+build	Post Setup Gradle	2025-12-14T17:41:45.0508236Z ##[endgroup]
+build	Post Setup Gradle	2025-12-14T17:41:45.0508611Z Generating Job Summary
+build	Post Setup Gradle	2025-12-14T17:41:45.0526833Z Completed post-action step
+build	Post set up JDK 17	﻿2025-12-14T17:41:45.0704986Z Post job cleanup.
+build	Post Run actions/checkout@v4	﻿2025-12-14T17:41:45.2530030Z Post job cleanup.
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3542768Z [command]/usr/bin/git version
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3586110Z git version 2.52.0
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3631904Z Temporarily overriding HOME='/home/runner/work/_temp/8e05f414-26dc-460a-9624-7275619b1811' before making global git config changes
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3633372Z Adding repository directory to the temporary git global config as a safe directory
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3645953Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/AnimeAlarm/AnimeAlarm
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3681369Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3714077Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3956774Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3979284Z http.https://github.com/.extraheader
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.3992233Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.4022645Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.4255792Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Post Run actions/checkout@v4	2025-12-14T17:41:45.4287394Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Complete job	﻿2025-12-14T17:41:45.4625820Z Cleaning up orphan processes
