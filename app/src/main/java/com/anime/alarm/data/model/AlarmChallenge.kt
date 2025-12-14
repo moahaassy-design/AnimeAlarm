@@ -9,11 +9,10 @@ sealed class AlarmChallenge : Parcelable {
     @Parcelize
     data class ShakeChallenge(val shakesRequired: Int) : AlarmChallenge()
     @Parcelize
-    data class MathChallenge(val difficulty: MathDifficulty) : AlarmChallenge()
+    data class MathChallenge(val difficulty: MathDifficulty) : Parcelable // Add @Parcelize here
 }
 
-// @Parcelize is for the class, not individual enum entries.
-enum class MathDifficulty : Parcelable {
+enum class MathDifficulty { // Remove Parcelable from enum class itself
     EASY, 
     MEDIUM, 
     HARD
