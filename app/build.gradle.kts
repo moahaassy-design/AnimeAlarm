@@ -71,6 +71,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     
+    // Google Mobile Ads SDK
+    implementation("com.google.android.gms:play-services-ads:22.6.0")
+    
     // Gson for Type Converters
     implementation("com.google.code.gson:gson:2.10.1")
     

@@ -7,6 +7,7 @@ import com.anime.alarm.data.OfflineAlarmRepository
 import com.anime.alarm.data.AndroidAlarmScheduler
 import com.anime.alarm.data.AlarmScheduler
 import com.anime.alarm.data.repository.CharacterRepository
+import com.google.android.gms.ads.MobileAds // Import MobileAds
 
 class AnimeAlarmApp : Application() {
     lateinit var container: AppContainer
@@ -14,6 +15,7 @@ class AnimeAlarmApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = DefaultAppContainer(this)
+        MobileAds.initialize(this) {} // Initialize AdMob SDK
     }
 }
 

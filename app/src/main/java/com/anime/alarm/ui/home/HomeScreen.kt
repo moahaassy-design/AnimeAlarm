@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anime.alarm.data.Alarm
 import com.anime.alarm.data.model.Character // <- New import
 import com.anime.alarm.ui.AppViewModelProvider
+import com.anime.alarm.ui.components.AdBanner // Import AdBanner
 import com.anime.alarm.ui.components.MascotEmotion // <- Moved import
 import com.anime.alarm.ui.components.WaguriMascot // <- Moved import
 import java.util.Locale
@@ -51,6 +52,9 @@ fun HomeScreen(
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Alarm")
             }
+        },
+        bottomBar = {
+            AdBanner()
         }
     ) { innerPadding ->
         HomeBody(
