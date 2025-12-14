@@ -71,33 +71,46 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (alarmList.isEmpty()) {
-        Column(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            WaguriMascot(
-                modifier = Modifier.size(200.dp),
-                emotion = MascotEmotion.SLEEPY,
-                assets = currentCharacter?.assets
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.surface,
+                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                    )
+                )
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "No Alarms set.\nGanbatte! Add one!",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
-            )
-        }
-    } else {
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(alarmList, key = { it.id }) { alarm ->
-                AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+    ) {
+        if (alarmList.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                WaguriMascot(
+                    modifier = Modifier.size(200.dp),
+                    emotion = MascotEmotion.SLEEPY,
+                    assets = currentCharacter?.assets
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "No Alarms set.\nGanbatte! Add one!",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(alarmList, key = { it.id }) { alarm ->
+                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                }
             }
         }
     }
@@ -113,8 +126,11 @@ fun AlarmItem(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier
@@ -133,14 +149,20 @@ fun AlarmItem(
                 Text(
                     text = alarm.label,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
             
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Switch(
                     checked = alarm.isActive,
-                    onCheckedChange = { onToggle(alarm, it) }
+                    onCheckedChange = { onToggle(alarm, it) },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.outline,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(onClick = { onDelete(alarm) }) {

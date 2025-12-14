@@ -1,7 +1,8 @@
 package com.anime.alarm.ui.entry
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions // Ensure KeyboardOptions is imported
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType // Add this import
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -113,7 +114,7 @@ fun AlarmEntryScreen(
                         },
                         label = { Text("Shakes Required") },
                         modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = androidx.compose.foundation.text.KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
                 }
                 is AlarmChallenge.MathChallenge -> {
