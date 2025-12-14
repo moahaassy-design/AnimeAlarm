@@ -49,7 +49,7 @@ class AlarmRingService : Service() {
             putExtra("ALARM_ID", alarmId)
             putExtra("ALARM_LABEL", label)
             putExtra("ALARM_CHALLENGE", currentChallenge)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
         startActivity(fullScreenIntent)
 
