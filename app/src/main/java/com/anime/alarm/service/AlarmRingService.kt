@@ -38,9 +38,9 @@ class AlarmRingService : Service() {
         val label = intent?.getStringExtra("ALARM_LABEL") ?: "Alarm"
         val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1
         
-        val challenge = intent?.let { extractChallenge(it) } ?: AlarmChallenge.None
+        val currentChallenge = intent?.let { extractChallenge(it) } ?: AlarmChallenge.None
         
-        startForeground(NOTIFICATION_ID, buildNotification(label, alarmId, challenge))
+        startForeground(NOTIFICATION_ID, buildNotification(label, alarmId, currentChallenge))
         startRinging()
         startVibrating()
 
@@ -48,7 +48,7 @@ class AlarmRingService : Service() {
         val fullScreenIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("ALARM_ID", alarmId)
             putExtra("ALARM_LABEL", label)
-            putExtra("ALARM_CHALLENGE", challenge)
+            putExtra("ALARM_CHALLENGE", currentChallenge)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(fullScreenIntent)
