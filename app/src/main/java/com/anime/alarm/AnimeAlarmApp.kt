@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.anime.alarm.data.AlarmDatabase
 import com.anime.alarm.data.OfflineAlarmRepository
+import com.anime.alarm.data.AndroidAlarmScheduler
+import com.anime.alarm.data.AlarmScheduler
 
 class AnimeAlarmApp : Application() {
     lateinit var container: AppContainer
@@ -13,9 +15,6 @@ class AnimeAlarmApp : Application() {
         container = DefaultAppContainer(this)
     }
 }
-
-import com.anime.alarm.data.AndroidAlarmScheduler
-import com.anime.alarm.data.AlarmScheduler
 
 interface AppContainer {
     val alarmRepository: OfflineAlarmRepository
