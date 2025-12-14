@@ -59,6 +59,9 @@ fun HomeScreen(
     }
 }
 
+import com.anime.alarm.ui.components.WaguriMascot
+import com.anime.alarm.ui.components.MascotEmotion
+
 @Composable
 fun HomeBody(
     alarmList: List<Alarm>,
@@ -67,11 +70,21 @@ fun HomeBody(
     modifier: Modifier = Modifier
 ) {
     if (alarmList.isEmpty()) {
-        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            WaguriMascot(
+                modifier = Modifier.size(200.dp),
+                emotion = MascotEmotion.SLEEPY
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "No Alarms set.\nGanbatte! Add one!",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.secondary
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
         }
     } else {
