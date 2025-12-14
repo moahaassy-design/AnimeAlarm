@@ -12,6 +12,7 @@ sealed class AlarmChallenge : Parcelable {
     data class MathChallenge(val difficulty: MathDifficulty) : AlarmChallenge()
 }
 
+// @Parcelize is for the class, not individual enum entries.
 enum class MathDifficulty : Parcelable {
     EASY, 
     MEDIUM, 

@@ -1,6 +1,6 @@
 package com.anime.alarm.data
 
-import androidx.room.Room // Add this import
+import androidx.room.Room // Ensure Room is imported
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
