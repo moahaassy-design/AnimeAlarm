@@ -1,5 +1,3 @@
-package com.anime.alarm
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,17 +12,55 @@ import androidx.navigation.compose.rememberNavController
 import com.anime.alarm.ui.home.HomeScreen
 import com.anime.alarm.ui.entry.AlarmEntryScreen
 import com.anime.alarm.ui.theme.AnimeAlarmTheme
+import com.anime.alarm.ui.challenge.ChallengeScreen
+import com.anime.alarm.data.model.AlarmChallenge
+import android.os.Build
+import android.view.WindowManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Make activity show over lock screen and turn screen on
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+            setTurnScreenOn(true)
+        } else {
+            window.addFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+            )
+        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED) // Deprecated but good for older APIs
+
+
         setContent {
             AnimeAlarmTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AnimeAlarmAppHost()
+                    // Check if we were launched by an alarm intent
+                    val challenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        intent.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        intent.getParcelableExtra("ALARM_CHALLENGE")
+                    } ?: AlarmChallenge.None
+
+                    val alarmId = intent.getIntExtra("ALARM_ID", -1)
+
+                    if (challenge != AlarmChallenge.None && alarmId != -1) {
+                        ChallengeScreen(
+                            challenge = challenge,
+                            onChallengeCompleted = {
+                                // Once challenge is completed, navigate back to home or finish activity
+                                finish() // For now, just finish to dismiss the challenge
+                            }
+                        )
+                    } else {
+                        AnimeAlarmAppHost()
+                    }
                 }
             }
         }

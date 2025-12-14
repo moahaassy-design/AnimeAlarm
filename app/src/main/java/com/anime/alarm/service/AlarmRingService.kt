@@ -18,6 +18,7 @@ import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
 import com.anime.alarm.MainActivity
 import com.anime.alarm.R
+import com.anime.alarm.data.model.AlarmChallenge // Import AlarmChallenge
 
 class AlarmRingService : Service() {
 
@@ -35,10 +36,26 @@ class AlarmRingService : Service() {
         }
 
         val label = intent?.getStringExtra("ALARM_LABEL") ?: "Alarm"
+        val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1 // Get alarm ID
+        val challenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra("ALARM_CHALLENGE")
+        } ?: AlarmChallenge.None
         
-        startForeground(NOTIFICATION_ID, buildNotification(label))
+        startForeground(NOTIFICATION_ID, buildNotification(label, alarmId, challenge))
         startRinging()
         startVibrating()
+
+        // Launch the ChallengeScreen/MainActivity
+        val fullScreenIntent = Intent(this, MainActivity::class.java).apply {
+            putExtra("ALARM_ID", alarmId)
+            putExtra("ALARM_LABEL", label)
+            putExtra("ALARM_CHALLENGE", challenge)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(fullScreenIntent)
 
         return START_STICKY
     }
@@ -96,7 +113,7 @@ class AlarmRingService : Service() {
         stopRinging()
     }
 
-    private fun buildNotification(label: String): Notification {
+    private fun buildNotification(label: String, alarmId: Int, challenge: AlarmChallenge): Notification {
         val channelId = "ALARM_SERVICE_CHANNEL"
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -113,9 +130,12 @@ class AlarmRingService : Service() {
 
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("ALARM_ID", alarmId)
+            putExtra("ALARM_LABEL", label)
+            putExtra("ALARM_CHALLENGE", challenge)
         }
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+            this, alarmId, intent, // Use alarmId for request code
             PendingIntent.FLAG_IMMUTABLE
         )
         

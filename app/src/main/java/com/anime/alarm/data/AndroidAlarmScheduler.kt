@@ -20,6 +20,7 @@ class AndroidAlarmScheduler(
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("ALARM_ID", alarm.id)
             putExtra("ALARM_LABEL", alarm.label)
+            putExtra("ALARM_CHALLENGE", alarm.challenge) // Pass the challenge object
         }
         
         // Flag immutable wajib di Android 12+

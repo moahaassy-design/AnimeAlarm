@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.anime.alarm.data.Alarm
 import com.anime.alarm.data.AlarmRepository
 import com.anime.alarm.data.AlarmScheduler
+import com.anime.alarm.data.model.AlarmChallenge // Import AlarmChallenge
 import kotlinx.coroutines.launch
 
 class EntryViewModel(
@@ -42,12 +43,14 @@ data class AlarmUiState(
     val hour: Int = 0,
     val minute: Int = 0,
     val label: String = "",
-    val isActive: Boolean = true
+    val isActive: Boolean = true,
+    val challenge: AlarmChallenge = AlarmChallenge.None // Add challenge to UI state
 )
 
 fun AlarmUiState.toAlarm(): Alarm = Alarm(
     hour = hour,
     minute = minute,
     label = label,
-    isActive = isActive
+    isActive = isActive,
+    challenge = challenge // Pass challenge to Alarm
 )

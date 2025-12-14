@@ -2,6 +2,7 @@ package com.anime.alarm.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.anime.alarm.data.model.AlarmChallenge // Import the new Challenge model
 
 @Entity(tableName = "alarms")
 data class Alarm(
@@ -13,5 +14,6 @@ data class Alarm(
     val isActive: Boolean = true,
     val isVibrate: Boolean = true,
     // Format: "Mon,Tue,Wed" or simple codes "1,2,3"
-    val daysOfWeek: String = "" 
+    val daysOfWeek: String = "",
+    val challenge: AlarmChallenge = AlarmChallenge.None // Add the challenge property
 )
