@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     
+    // Gson for Type Converters
+    implementation("com.google.code.gson:gson:2.10.1")
+    
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
