@@ -60,7 +60,7 @@ fun AlarmEntryScreen(
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             MaterialTheme.colorScheme.surface,
-                            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f)
+                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
                         )
                     )
                 )
