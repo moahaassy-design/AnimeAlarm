@@ -1,7 +1,7 @@
 package com.anime.alarm.ui.entry
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions // Added import
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,7 +33,7 @@ fun AlarmEntryScreen(
             when(alarmUiState.challenge) {
                 AlarmChallenge.None -> "None"
                 is AlarmChallenge.ShakeChallenge -> "Shake Challenge"
-                is AlarmChallenge.MathChallenge -> "MathChallenge" // Adjusted to match enum name
+                is AlarmChallenge.MathChallenge -> "Math Challenge"
             }
         ) 
     }

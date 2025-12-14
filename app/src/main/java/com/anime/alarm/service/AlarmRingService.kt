@@ -16,9 +16,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
-import com.anime.alarm.MainActivity // Import MainActivity
+import com.anime.alarm.MainActivity
 import com.anime.alarm.R
-import com.anime.alarm.data.model.AlarmChallenge // Import AlarmChallenge
+import com.anime.alarm.data.model.AlarmChallenge
 
 class AlarmRingService : Service() {
 
@@ -36,7 +36,7 @@ class AlarmRingService : Service() {
         }
 
         val label = intent?.getStringExtra("ALARM_LABEL") ?: "Alarm"
-        val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1 // Get alarm ID
+        val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1
         val challenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent?.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
         } else {
@@ -49,7 +49,7 @@ class AlarmRingService : Service() {
         startVibrating()
 
         // Launch the ChallengeScreen/MainActivity
-        var fullScreenIntent = Intent(this, MainActivity::class.java).apply {
+        val fullScreenIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("ALARM_ID", alarmId)
             putExtra("ALARM_LABEL", label)
             putExtra("ALARM_CHALLENGE", challenge)
