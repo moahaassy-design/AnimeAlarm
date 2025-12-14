@@ -16,7 +16,7 @@ class AlarmReceiver : BroadcastReceiver() {
         
         // Start Foreground Service
         val serviceIntent = Intent(context, com.anime.alarm.service.AlarmRingService::class.java).apply {
-            putExtra("ALARM_LABEL", message)
+            putExtras(intent) // Forward all extras (ID, Label, Challenge)
         }
         
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
