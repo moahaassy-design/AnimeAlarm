@@ -6,25 +6,24 @@ import com.anime.alarm.data.model.AlarmChallenge
 import com.anime.alarm.data.model.MathDifficulty
 
 class AlarmTypeConverters {
-    private val gson = Gson()
 
     @TypeConverter
     fun fromAlarmChallenge(challenge: AlarmChallenge): String {
-        return gson.toJson(challenge)
+        return when (challenge) {
+            is AlarmChallenge.None -> "None"
+            is AlarmChallenge.ShakeChallenge -> "Shake|${challenge.shakesRequired}"
+            is AlarmChallenge.MathChallenge -> "Math|${challenge.difficulty.name}"
+        }
     }
 
     @TypeConverter
-    fun toAlarmChallenge(challengeString: String): AlarmChallenge {
-        // This is a simple conversion. For sealed classes, you might need to
-        // include type information in the JSON or use a custom deserializer
-        // that checks for properties to determine the concrete type.
-        // For now, we'll try to deserialize based on a simple check or default.
-        if (challengeString.contains("ShakeChallenge")) {
-            return gson.fromJson(challengeString, AlarmChallenge.ShakeChallenge::class.java)
-        } else if (challengeString.contains("MathChallenge")) {
-            return gson.fromJson(challengeString, AlarmChallenge.MathChallenge::class.java)
+    fun toAlarmChallenge(value: String): AlarmChallenge {
+        val parts = value.split("|")
+        return when (parts[0]) {
+            "Shake" -> AlarmChallenge.ShakeChallenge(parts.getOrNull(1)?.toIntOrNull() ?: 10)
+            "Math" -> AlarmChallenge.MathChallenge(MathDifficulty.valueOf(parts.getOrNull(1) ?: "EASY"))
+            else -> AlarmChallenge.None
         }
-        return AlarmChallenge.None
     }
 
     @TypeConverter
@@ -34,6 +33,10 @@ class AlarmTypeConverters {
 
     @TypeConverter
     fun toMathDifficulty(difficultyString: String): MathDifficulty {
-        return MathDifficulty.valueOf(difficultyString)
+        return try {
+            MathDifficulty.valueOf(difficultyString)
+        } catch (e: IllegalArgumentException) {
+            MathDifficulty.EASY
+        }
     }
 }
