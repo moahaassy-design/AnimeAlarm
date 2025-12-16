@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                         intent.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
                     } else {
                         @Suppress("DEPRECATION")
-                        intent.getParcelableExtra("ALARM_CHALLENGE")
+                        intent.getParcelableExtra("ALARM_CHALLENGE") as? AlarmChallenge
                     } ?: AlarmChallenge.None
 
                     val alarmId = intent.getIntExtra("ALARM_ID", -1)

@@ -7,11 +7,13 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.IBinder
+import android.os.PowerManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -24,9 +26,17 @@ class AlarmRingService : Service() {
 
     private var mediaPlayer: MediaPlayer? = null
     private var vibrator: Vibrator? = null
+    private var wakeLock: PowerManager.WakeLock? = null
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AnimeAlarm::RingServiceWakelock")
+        wakeLock?.acquire(10 * 60 * 1000L /*10 minutes*/)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -40,7 +50,13 @@ class AlarmRingService : Service() {
         
         val currentChallenge = intent?.let { extractChallenge(it) } ?: AlarmChallenge.None
         
-        startForeground(NOTIFICATION_ID, buildNotification(label, alarmId, currentChallenge))
+        val notification = buildNotification(label, alarmId, currentChallenge)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
+        
         startRinging()
         startVibrating()
 
@@ -116,6 +132,9 @@ class AlarmRingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         stopRinging()
+        if (wakeLock?.isHeld == true) {
+            wakeLock?.release()
+        }
     }
 
     private fun buildNotification(label: String, alarmId: Int, challenge: AlarmChallenge): Notification {

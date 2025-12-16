@@ -21,7 +21,14 @@ class AlarmTypeConverters {
         val parts = value.split("|")
         return when (parts[0]) {
             "Shake" -> AlarmChallenge.ShakeChallenge(parts.getOrNull(1)?.toIntOrNull() ?: 10)
-            "Math" -> AlarmChallenge.MathChallenge(MathDifficulty.valueOf(parts.getOrNull(1) ?: "EASY"))
+            "Math" -> {
+                val difficulty = try {
+                    MathDifficulty.valueOf(parts.getOrNull(1) ?: "EASY")
+                } catch (e: IllegalArgumentException) {
+                    MathDifficulty.EASY
+                }
+                AlarmChallenge.MathChallenge(difficulty)
+            }
             else -> AlarmChallenge.None
         }
     }
