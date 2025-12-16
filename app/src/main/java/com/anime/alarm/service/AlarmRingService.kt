@@ -18,9 +18,10 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
-import com.anime.alarm.MainActivity // Explicitly import MainActivity
+import com.anime.alarm.MainActivity
 import com.anime.alarm.R
 import com.anime.alarm.data.model.AlarmChallenge
+import com.anime.alarm.data.model.MathDifficulty
 
 class AlarmRingService : Service() {
 
@@ -48,9 +49,9 @@ class AlarmRingService : Service() {
         val label = intent?.getStringExtra("ALARM_LABEL") ?: "Alarm"
         val alarmId = intent?.getIntExtra("ALARM_ID", -1) ?: -1
         
+        // Reconstruct challenge from primitives
         val currentChallenge = intent?.let { extractChallenge(it) } ?: AlarmChallenge.None
         
-        // Pass intent extras to buildNotification so it can build the PendingIntent correctly
         val notification = buildNotification(label, alarmId, currentChallenge)
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -62,15 +63,8 @@ class AlarmRingService : Service() {
         startRinging()
         startVibrating()
 
-        // REMOVED: startActivity(fullScreenIntent) -> Moved to setFullScreenIntent in notification
-        // This prevents crash on Android 10+ due to Background Activity Start Restrictions
-
         return START_STICKY
     }
-
-import com.anime.alarm.data.model.MathDifficulty // Add this import
-
-// ...
 
     private fun extractChallenge(intent: Intent): AlarmChallenge {
         val type = intent.getStringExtra("CHALLENGE_TYPE") ?: "NONE"
@@ -84,7 +78,81 @@ import com.anime.alarm.data.model.MathDifficulty // Add this import
         }
     }
 
-    // ...
+    private fun startRinging() {
+        try {
+            // Priority 1: Play Anime Character Voice (Ara Ara~)
+            mediaPlayer = MediaPlayer.create(applicationContext, R.raw.char_getup).apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                )
+                isLooping = true
+                start()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Fallback: System Alarm Sound
+            try {
+                val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                    ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+                mediaPlayer = MediaPlayer().apply {
+                    setDataSource(applicationContext, alarmUri)
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .build()
+                )
+                    isLooping = true
+                    prepare()
+                    start()
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    private fun startVibrating() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
+                vibrator = vibratorManager?.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            }
+
+            val pattern = longArrayOf(0, 1000, 1000)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator?.vibrate(VibrationEffect.createWaveform(pattern, 0))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator?.vibrate(pattern, 0)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun stopRinging() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+
+        vibrator?.cancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopRinging()
+        if (wakeLock?.isHeld == true) {
+            wakeLock?.release()
+        }
+    }
 
     private fun buildNotification(label: String, alarmId: Int, challenge: AlarmChallenge): Notification {
         val channelId = "ALARM_SERVICE_CHANNEL"
@@ -96,7 +164,7 @@ import com.anime.alarm.data.model.MathDifficulty // Add this import
                 "Alarm Service",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                setSound(null, null) // Service manages sound manually
+                setSound(null, null)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
             notificationManager.createNotificationChannel(channel)
@@ -126,6 +194,7 @@ import com.anime.alarm.data.model.MathDifficulty // Add this import
                 }
             }
         }
+        
         val pendingIntent = PendingIntent.getActivity(
             this, alarmId, intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -144,7 +213,7 @@ import com.anime.alarm.data.model.MathDifficulty // Add this import
             .setContentText(label)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
-            .setFullScreenIntent(pendingIntent, true) // IMPORTANT: For Android 10+
+            .setFullScreenIntent(pendingIntent, true)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setOngoing(true)
