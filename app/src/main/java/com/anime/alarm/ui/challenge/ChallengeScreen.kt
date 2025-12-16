@@ -141,13 +141,24 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onChallengeC
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(32.dp)
     ) {
-        Text("Shake to Dismiss!", style = MaterialTheme.typography.headlineLarge)
+        Text("Shake to Dismiss!", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.error)
+        Spacer(modifier = Modifier.height(32.dp))
+        
+        val progress = if (requiredShakes > 0) shakeCount.toFloat() / requiredShakes else 0f
+        androidx.compose.material3.LinearProgressIndicator(
+            progress = { progress.coerceIn(0f, 1f) },
+            modifier = Modifier.fillMaxWidth().height(24.dp),
+            color = MaterialTheme.colorScheme.primary,
+            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        )
+        
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Shakes: $shakeCount / $requiredShakes",
-            style = MaterialTheme.typography.headlineMedium
+            text = "$shakeCount / $requiredShakes",
+            style = MaterialTheme.typography.displayMedium,
+            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(32.dp))
         if (shakeCount >= requiredShakes) {

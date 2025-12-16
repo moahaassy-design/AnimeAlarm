@@ -19,10 +19,26 @@ import com.anime.alarm.ui.shop.ShopScreen // Import ShopScreen
 import com.anime.alarm.data.model.AlarmChallenge
 import android.os.Build
 import android.view.WindowManager
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings
+import android.net.Uri
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Request Exact Alarm Permission for Android 12+ (API 31+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            }
+        }
 
         // Make activity show over lock screen and turn screen on
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
