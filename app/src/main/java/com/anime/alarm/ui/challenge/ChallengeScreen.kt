@@ -148,7 +148,7 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onChallengeC
         
         val progress = if (requiredShakes > 0) shakeCount.toFloat() / requiredShakes else 0f
         androidx.compose.material3.LinearProgressIndicator(
-            progress = { progress.coerceIn(0f, 1f) },
+            progress = progress.coerceIn(0f, 1f),
             modifier = Modifier.fillMaxWidth().height(24.dp),
             color = MaterialTheme.colorScheme.primary,
             trackColor = MaterialTheme.colorScheme.surfaceVariant,
