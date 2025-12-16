@@ -268,6 +268,7 @@ fun ChallengeOptionCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnimatedChallengeSettings(
     challenge: AlarmChallenge,
