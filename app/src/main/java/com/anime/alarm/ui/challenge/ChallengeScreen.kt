@@ -440,7 +440,7 @@ fun MemoryChallengeContent(challenge: AlarmChallenge.MemoryChallenge, onComplete
                                             onComplete()
                                         } else {
                                             currentRound++
-                                            pattern = generatePattern(3 + currentRound) // Harder
+                                            pattern = generatePattern(minOf(3 + currentRound, 9)) // Harder, max 9
                                             showingPattern = true
                                         }
                                     }

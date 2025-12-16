@@ -8,8 +8,14 @@ import android.widget.Toast
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.extras == null) {
+            Log.w("AnimeAlarm", "AlarmReceiver received intent with no extras! Using defaults.")
+        }
+        
         val message = intent.getStringExtra("ALARM_LABEL") ?: "Alarm!"
-        Log.d("AnimeAlarm", "Alarm Triggered: $message")
+        val alarmId = intent.getIntExtra("ALARM_ID", -1)
+        
+        Log.d("AnimeAlarm", "Alarm Triggered: $message (ID: $alarmId)")
         
         // Tampilkan Toast sebagai indikator awal
         Toast.makeText(context, "ANIME ALARM: $message", Toast.LENGTH_LONG).show()
