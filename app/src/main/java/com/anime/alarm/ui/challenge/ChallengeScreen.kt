@@ -144,6 +144,7 @@ fun ChallengeScreen(challenge: AlarmChallenge, onChallengeCompleted: () -> Unit)
 fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: () -> Unit) {
     val context = LocalContext.current
     var shakeCount by remember { mutableIntStateOf(0) }
+    var sensorMissing by remember { mutableStateOf(false) }
     val requiredShakes = challenge.shakesRequired
     
     // Animation for the progress bar
@@ -161,60 +162,75 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: 
              @Suppress("DEPRECATION") context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         }
 
-        val sensorEventListener = object : SensorEventListener {
-            private var lastShakeTime: Long = 0
-            private val SHAKE_THRESHOLD = 12.0f 
+        if (accelerometer == null) {
+            sensorMissing = true
+            onDispose { }
+        } else {
+            val sensorEventListener = object : SensorEventListener {
+                private var lastShakeTime: Long = 0
+                private val SHAKE_THRESHOLD = 12.0f 
 
-            override fun onSensorChanged(event: SensorEvent?) {
-                if (event != null) {
-                    val x = event.values[0]
-                    val y = event.values[1]
-                    val z = event.values[2]
-                    val gForce = sqrt(x * x + y * y + z * z)
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event != null) {
+                        val x = event.values[0]
+                        val y = event.values[1]
+                        val z = event.values[2]
+                        val gForce = sqrt(x * x + y * y + z * z)
 
-                    if (gForce > SHAKE_THRESHOLD && System.currentTimeMillis() - lastShakeTime > 500) {
-                        shakeCount++
-                        lastShakeTime = System.currentTimeMillis()
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                        if (gForce > SHAKE_THRESHOLD && System.currentTimeMillis() - lastShakeTime > 500) {
+                            shakeCount++
+                            lastShakeTime = System.currentTimeMillis()
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                            }
                         }
                     }
                 }
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
             }
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-        }
 
-        sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
-        onDispose { sensorManager.unregisterListener(sensorEventListener) }
+            sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
+            onDispose { sensorManager.unregisterListener(sensorEventListener) }
+        }
+    }
+
+    if (sensorMissing) {
+        LaunchedEffect(Unit) {
+            delay(2000)
+            onComplete()
+        }
+        Text("No Accelerometer detected.\nAuto-completing...", color = ErrorRed, textAlign = TextAlign.Center)
     }
 
     if (shakeCount >= requiredShakes) {
         LaunchedEffect(Unit) { onComplete() }
     }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text("SHAKE IT!", style = MaterialTheme.typography.displayLarge, color = SakuraPink, fontWeight = FontWeight.Black)
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Circular Progress
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(200.dp)) {
-            CircularProgressIndicator(
-                progress = 1f,
-                modifier = Modifier.fillMaxSize(),
-                color = Color.White.copy(alpha = 0.2f),
-                trackColor = Color.Transparent,
-            )
-            CircularProgressIndicator(
-                progress = progress,
-                modifier = Modifier.fillMaxSize(),
-                color = SakuraDeep,
-                strokeWidth = 12.dp,
-            )
-            Text(
-                "${(progress * 100).toInt()}%",
-                style = MaterialTheme.typography.headlineLarge,
-                color = Color.White
-            )
+    if (!sensorMissing) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("SHAKE IT!", style = MaterialTheme.typography.displayLarge, color = SakuraPink, fontWeight = FontWeight.Black)
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            // Circular Progress
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(200.dp)) {
+                CircularProgressIndicator(
+                    progress = 1f,
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White.copy(alpha = 0.2f),
+                    trackColor = Color.Transparent,
+                )
+                CircularProgressIndicator(
+                    progress = progress,
+                    modifier = Modifier.fillMaxSize(),
+                    color = SakuraDeep,
+                    strokeWidth = 12.dp,
+                )
+                Text(
+                    "${(progress * 100).toInt()}%",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White
+                )
+            }
         }
     }
 }
