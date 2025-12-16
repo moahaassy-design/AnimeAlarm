@@ -15,6 +15,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,11 +32,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.anime.alarm.R
 import com.anime.alarm.data.model.AlarmChallenge
 import com.anime.alarm.data.model.MathDifficulty
 import com.anime.alarm.service.AlarmRingService
@@ -74,15 +79,12 @@ fun ChallengeScreen(challenge: AlarmChallenge, onChallengeCompleted: () -> Unit)
         contentAlignment = Alignment.Center
     ) {
         // Character Sprite Display
-        var characterImage by remember { mutableStateOf(painterResource(R.drawable.char_normal)) }
         var challengeCompletedAnim by remember { mutableStateOf(false) }
 
         // Change sprite to happy when challenge is completed
-        LaunchedEffect(challengeCompletedAnim) {
-            if (challengeCompletedAnim) {
-                characterImage = painterResource(R.drawable.char_happy)
-            }
-        }
+        val charNormal = painterResource(R.drawable.char_normal)
+        val charHappy = painterResource(R.drawable.char_happy)
+        val characterImage = if (challengeCompletedAnim) charHappy else charNormal
         
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -197,13 +199,13 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: 
         // Circular Progress
         Box(contentAlignment = Alignment.Center, modifier = Modifier.size(200.dp)) {
             CircularProgressIndicator(
-                progress = { 1f },
+                progress = 1f,
                 modifier = Modifier.fillMaxSize(),
                 color = Color.White.copy(alpha = 0.2f),
                 trackColor = Color.Transparent,
             )
             CircularProgressIndicator(
-                progress = { progress },
+                progress = progress,
                 modifier = Modifier.fillMaxSize(),
                 color = SakuraDeep,
                 strokeWidth = 12.dp,
