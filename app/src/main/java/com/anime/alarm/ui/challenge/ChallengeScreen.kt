@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Log
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.animation.AnimatedVisibility
@@ -175,6 +176,7 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: 
         }
 
         if (sensorManager == null || accelerometer == null) {
+            Log.e("AnimeAlarm", "Accelerometer not available! Auto-completing challenge.")
             sensorMissing = true
             onDispose { }
         } else {
@@ -311,6 +313,7 @@ fun MathChallengeContent(challenge: AlarmChallenge.MathChallenge, onComplete: ()
                                 when (btn) {
                                     "C" -> { input = ""; isError = false }
                                     "OK" -> {
+                                        Log.d("AnimeAlarm", "Math Input: $input, Expected: ${question.answer}")
                                         if (input == question.answer.toString()) {
                                             onComplete()
                                         } else {
@@ -370,7 +373,7 @@ fun MemoryChallengeContent(challenge: AlarmChallenge.MemoryChallenge, onComplete
     val roundsTotal = challenge.numRounds
     var currentRound by remember { mutableIntStateOf(1) }
     var pattern by remember { mutableStateOf(generatePattern(3)) } // Start with 3 items
-    var userPattern by remember { mutableStateOf(mutableListOf<Int>()) }
+    val userPattern = remember { mutableStateListOf<Int>() }
     var showingPattern by remember { mutableStateOf(true) }
     var flashIndex by remember { mutableIntStateOf(-1) } // Which index is currently glowing
     var message by remember { mutableStateOf("Watch carefully!") }
@@ -421,14 +424,18 @@ fun MemoryChallengeContent(challenge: AlarmChallenge.MemoryChallenge, onComplete
                                     
                                     // Check immediately if wrong
                                     if (userPattern[userPattern.lastIndex] != pattern[userPattern.lastIndex]) {
-                                        // Wrong tap! Reset pattern
+                                        // Wrong tap! Reset pattern and restart round
+                                        Log.d("AnimeAlarm", "Memory: Wrong tap. Resetting pattern.")
                                         message = "Wrong! Try Again."
+                                        userPattern.clear()
+                                        pattern = generatePattern(3 + currentRound - 1) // Generate new pattern for same level
                                         showingPattern = true
                                         return@clickable
                                     }
 
                                     // Check if complete
                                     if (userPattern.size == pattern.size) {
+                                        Log.d("AnimeAlarm", "Memory: Pattern complete.")
                                         if (currentRound >= roundsTotal) {
                                             onComplete()
                                         } else {
