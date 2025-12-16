@@ -86,15 +86,61 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+import com.anime.alarm.util.BatteryOptimizationHelper
+import com.anime.alarm.util.BatteryOptimizationDialog
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+
+// ... imports ...
+
 @Composable
 fun AnimeAlarmAppHost() {
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val helper = remember { BatteryOptimizationHelper(context) }
+    
+    // Check if we already showed the warning
+    val sharedPrefs = remember { context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
+    var showBatteryDialog by remember { 
+        mutableStateOf(
+            helper.isVendorSpecificOptimizationNeeded() && 
+            !sharedPrefs.getBoolean("battery_opt_shown", false)
+        ) 
+    }
+
+    if (showBatteryDialog) {
+        BatteryOptimizationDialog(
+            onDismiss = {
+                showBatteryDialog = false
+                sharedPrefs.edit().putBoolean("battery_opt_shown", true).apply()
+            },
+            onConfirm = {
+                showBatteryDialog = false
+                sharedPrefs.edit().putBoolean("battery_opt_shown", true).apply()
+                try {
+                    val intent = helper.getOptimizationIntent()
+                    if (intent != null) {
+                        context.startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    // Fallback if specific intent fails
+                    try {
+                        context.startActivity(Intent(Settings.ACTION_SETTINGS))
+                    } catch (e2: Exception) {
+                        e2.printStackTrace()
+                    }
+                }
+            }
+        )
+    }
     
     NavHost(navController = navController, startDestination = "home") {
+        // ... existing routes ...
         composable("home") {
             HomeScreen(
                 navigateToEntry = { navController.navigate("entry") },
-                navigateToShop = { navController.navigate("shop") } // Add callback
+                navigateToShop = { navController.navigate("shop") }
             )
         }
         composable("entry") {
