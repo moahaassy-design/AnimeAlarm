@@ -17,6 +17,9 @@ import com.anime.alarm.ui.AppViewModelProvider
 import com.anime.alarm.data.model.AlarmChallenge
 import com.anime.alarm.data.model.MathDifficulty
 
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlarmEntryScreen(
@@ -29,6 +32,7 @@ fun AlarmEntryScreen(
         initialHour = 0,
         initialMinute = 0
     )
+    val scrollState = rememberScrollState()
 
     // Challenge selection state
     var expanded by remember { mutableStateOf(false) }
@@ -69,7 +73,8 @@ fun AlarmEntryScreen(
             Column(
                 modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
