@@ -15,6 +15,7 @@ import com.anime.alarm.ui.home.HomeScreen
 import com.anime.alarm.ui.entry.AlarmEntryScreen
 import com.anime.alarm.ui.theme.AnimeAlarmTheme
 import com.anime.alarm.ui.challenge.ChallengeScreen
+import com.anime.alarm.ui.shop.ShopScreen // Import ShopScreen
 import com.anime.alarm.data.model.AlarmChallenge
 import android.os.Build
 import android.view.WindowManager
@@ -76,11 +77,17 @@ fun AnimeAlarmAppHost() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
-                navigateToEntry = { navController.navigate("entry") }
+                navigateToEntry = { navController.navigate("entry") },
+                navigateToShop = { navController.navigate("shop") } // Add callback
             )
         }
         composable("entry") {
             AlarmEntryScreen(
+                navigateBack = { navController.popBackStack() }
+            )
+        }
+        composable("shop") {
+            ShopScreen(
                 navigateBack = { navController.popBackStack() }
             )
         }

@@ -73,6 +73,9 @@ dependencies {
     
     // Google Mobile Ads SDK
     implementation("com.google.android.gms:play-services-ads:22.6.0")
+
+    // Google Play Billing
+    implementation("com.android.billingclient:billing-ktx:6.1.0")
     
     // Gson for Type Converters
     implementation("com.google.code.gson:gson:2.10.1")

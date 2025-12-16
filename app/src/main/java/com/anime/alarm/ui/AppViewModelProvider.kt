@@ -6,8 +6,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.anime.alarm.AnimeAlarmApp
 import com.anime.alarm.ui.home.HomeViewModel
-
 import com.anime.alarm.ui.entry.EntryViewModel
+import com.anime.alarm.ui.shop.ShopViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -24,6 +24,12 @@ object AppViewModelProvider {
             EntryViewModel(
                 app.container.alarmRepository,
                 app.container.alarmScheduler
+            )
+        }
+        initializer {
+            val app = animeAlarmApplication()
+            ShopViewModel(
+                app.container.billingClient
             )
         }
     }

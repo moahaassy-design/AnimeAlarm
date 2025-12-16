@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.ShoppingCart // Import ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anime.alarm.data.Alarm
-import com.anime.alarm.data.model.Character // <- New import
+import com.anime.alarm.data.model.Character
 import com.anime.alarm.ui.AppViewModelProvider
-import com.anime.alarm.ui.components.AdBanner // Import AdBanner
-import com.anime.alarm.ui.components.MascotEmotion // <- Moved import
-import com.anime.alarm.ui.components.WaguriMascot // <- Moved import
+import com.anime.alarm.ui.components.AdBanner
+import com.anime.alarm.ui.components.MascotEmotion
+import com.anime.alarm.ui.components.WaguriMascot
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,14 +35,24 @@ import java.util.Locale
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    navigateToEntry: () -> Unit = {} // Placeholder for navigation
+    navigateToEntry: () -> Unit = {},
+    navigateToShop: () -> Unit = {} // Add new callback
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Anime Alarm", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary) }
+                title = { Text("Anime Alarm", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary) },
+                actions = {
+                    IconButton(onClick = navigateToShop) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Shop",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {
