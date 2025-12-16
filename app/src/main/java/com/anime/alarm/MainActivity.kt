@@ -36,6 +36,8 @@ import androidx.compose.runtime.setValue
 
 import com.anime.alarm.data.model.MathDifficulty // Add this import
 
+import android.util.Log // Add import
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,11 @@ class MainActivity : ComponentActivity() {
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
                     data = Uri.parse("package:$packageName")
                 }
-                startActivity(intent)
+                try {
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Log.e("MainActivity", "Failed to open exact alarm settings", e)
+                }
             }
         }
 
