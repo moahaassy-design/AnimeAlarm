@@ -154,18 +154,33 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: 
     )
 
     DisposableEffect(Unit) {
-        val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
-        } else {
-             @Suppress("DEPRECATION") context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        var sensorManager: SensorManager? = null
+        var accelerometer: Sensor? = null
+        var vibrator: Vibrator? = null
+
+        try {
+            sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
+            accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            
+            vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
+                vibratorManager?.defaultVibrator
+            } else {
+                 @Suppress("DEPRECATION") 
+                 context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Fallback if system services fail
         }
 
-        if (accelerometer == null) {
+        if (sensorManager == null || accelerometer == null) {
             sensorMissing = true
             onDispose { }
         } else {
+            // Capture vibrator safely for use inside listener
+            val safeVibrator = vibrator
+            
             val sensorEventListener = object : SensorEventListener {
                 private var lastShakeTime: Long = 0
                 private val SHAKE_THRESHOLD = 12.0f 
@@ -180,8 +195,16 @@ fun ShakeChallengeContent(challenge: AlarmChallenge.ShakeChallenge, onComplete: 
                         if (gForce > SHAKE_THRESHOLD && System.currentTimeMillis() - lastShakeTime > 500) {
                             shakeCount++
                             lastShakeTime = System.currentTimeMillis()
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                            // Safe vibration call
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    safeVibrator?.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                                } else {
+                                    @Suppress("DEPRECATION")
+                                    safeVibrator?.vibrate(50)
+                                }
+                            } catch (e: Exception) {
+                                // Ignore vibration errors
                             }
                         }
                     }
