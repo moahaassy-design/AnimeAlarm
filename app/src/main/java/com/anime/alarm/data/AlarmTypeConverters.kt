@@ -13,6 +13,7 @@ class AlarmTypeConverters {
             is AlarmChallenge.None -> "None"
             is AlarmChallenge.ShakeChallenge -> "Shake|${challenge.shakesRequired}"
             is AlarmChallenge.MathChallenge -> "Math|${challenge.difficulty.name}"
+            is AlarmChallenge.MemoryChallenge -> "Memory|${challenge.numRounds}"
         }
     }
 
@@ -29,6 +30,7 @@ class AlarmTypeConverters {
                 }
                 AlarmChallenge.MathChallenge(difficulty)
             }
+            "Memory" -> AlarmChallenge.MemoryChallenge(parts.getOrNull(1)?.toIntOrNull() ?: 3)
             else -> AlarmChallenge.None
         }
     }
