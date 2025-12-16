@@ -24,6 +24,15 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.net.Uri
+import com.anime.alarm.util.BatteryOptimizationHelper
+import com.anime.alarm.util.BatteryOptimizationDialog
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,14 +94,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-import com.anime.alarm.util.BatteryOptimizationHelper
-import com.anime.alarm.util.BatteryOptimizationDialog
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-
-// ... imports ...
 
 @Composable
 fun AnimeAlarmAppHost() {
