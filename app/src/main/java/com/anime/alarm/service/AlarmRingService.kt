@@ -50,7 +50,9 @@ class AlarmRingService : Service() {
         
         val currentChallenge = intent?.let { extractChallenge(it) } ?: AlarmChallenge.None
         
+        // Pass intent extras to buildNotification so it can build the PendingIntent correctly
         val notification = buildNotification(label, alarmId, currentChallenge)
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
         } else {
@@ -60,14 +62,8 @@ class AlarmRingService : Service() {
         startRinging()
         startVibrating()
 
-        // Launch the ChallengeScreen/MainActivity
-        val fullScreenIntent = Intent(this, MainActivity::class.java).apply {
-            putExtra("ALARM_ID", alarmId)
-            putExtra("ALARM_LABEL", label)
-            putExtra("ALARM_CHALLENGE", currentChallenge)
-            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        }
-        startActivity(fullScreenIntent)
+        // REMOVED: startActivity(fullScreenIntent) -> Moved to setFullScreenIntent in notification
+        // This prevents crash on Android 10+ due to Background Activity Start Restrictions
 
         return START_STICKY
     }
@@ -164,6 +160,7 @@ class AlarmRingService : Service() {
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 setSound(null, null) // Service manages sound manually
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
             notificationManager.createNotificationChannel(channel)
         }
@@ -175,8 +172,8 @@ class AlarmRingService : Service() {
             putExtra("ALARM_CHALLENGE", challenge)
         }
         val pendingIntent = PendingIntent.getActivity(
-            this, alarmId, intent, // Use alarmId for request code
-            PendingIntent.FLAG_IMMUTABLE
+            this, alarmId, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         
         // Intent to stop alarm
@@ -184,7 +181,7 @@ class AlarmRingService : Service() {
             action = ACTION_STOP
         }
         val stopPendingIntent = PendingIntent.getService(
-            this, 1, stopIntent, PendingIntent.FLAG_IMMUTABLE
+            this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         return NotificationCompat.Builder(this, channelId)
@@ -192,7 +189,9 @@ class AlarmRingService : Service() {
             .setContentText(label)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true) // IMPORTANT: For Android 10+
             .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setOngoing(true)
             .addAction(R.drawable.ic_launcher_foreground, "Dismiss", stopPendingIntent)
             .build()
