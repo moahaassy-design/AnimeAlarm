@@ -10,7 +10,11 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import androidx.compose.animation.core.*
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -69,17 +73,64 @@ fun ChallengeScreen(challenge: AlarmChallenge, onChallengeCompleted: () -> Unit)
             ),
         contentAlignment = Alignment.Center
     ) {
-        when (challenge) {
-            is AlarmChallenge.ShakeChallenge -> ShakeChallengeContent(challenge, completeAndStop)
-            is AlarmChallenge.MathChallenge -> MathChallengeContent(challenge, completeAndStop)
-            is AlarmChallenge.MemoryChallenge -> MemoryChallengeContent(challenge, completeAndStop)
-            AlarmChallenge.None -> {
-                Button(
-                    onClick = completeAndStop,
-                    colors = ButtonDefaults.buttonColors(containerColor = SakuraDeep),
-                    modifier = Modifier.padding(16.dp).fillMaxWidth().height(60.dp)
-                ) {
-                    Text("Dismiss Alarm", fontSize = 20.sp)
+        // Character Sprite Display
+        var characterImage by remember { mutableStateOf(painterResource(R.drawable.char_normal)) }
+        var challengeCompletedAnim by remember { mutableStateOf(false) }
+
+        // Change sprite to happy when challenge is completed
+        LaunchedEffect(challengeCompletedAnim) {
+            if (challengeCompletedAnim) {
+                characterImage = painterResource(R.drawable.char_happy)
+            }
+        }
+        
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top // Align content to top for character placement
+        ) {
+            // Animated Character Image
+            AnimatedVisibility(
+                visible = true, // Always visible on challenge screen
+                enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 500))
+            ) {
+                Image(
+                    painter = characterImage,
+                    contentDescription = "Character",
+                    modifier = Modifier
+                        .size(200.dp)
+                        .scale(if (challengeCompletedAnim) 1.2f else 1.0f) // Simple reaction on completion
+                        .animateContentSize() // Animate size changes
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Main Challenge Content
+            when (challenge) {
+                is AlarmChallenge.ShakeChallenge -> ShakeChallengeContent(challenge) {
+                    challengeCompletedAnim = true
+                    completeAndStop()
+                }
+                is AlarmChallenge.MathChallenge -> MathChallengeContent(challenge) {
+                    challengeCompletedAnim = true
+                    completeAndStop()
+                }
+                is AlarmChallenge.MemoryChallenge -> MemoryChallengeContent(challenge) {
+                    challengeCompletedAnim = true
+                    completeAndStop()
+                }
+                AlarmChallenge.None -> {
+                    Button(
+                        onClick = {
+                            challengeCompletedAnim = true
+                            completeAndStop()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = SakuraDeep),
+                        modifier = Modifier.padding(16.dp).fillMaxWidth().height(60.dp)
+                    ) {
+                        Text("Dismiss Alarm", fontSize = 20.sp)
+                    }
                 }
             }
         }
