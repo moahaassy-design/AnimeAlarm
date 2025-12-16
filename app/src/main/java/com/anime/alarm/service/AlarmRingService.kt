@@ -83,11 +83,8 @@ class AlarmRingService : Service() {
 
     private fun startRinging() {
         try {
-            val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(applicationContext, alarmUri)
+            // Priority 1: Play Anime Character Voice (Ara Ara~)
+            mediaPlayer = MediaPlayer.create(applicationContext, R.raw.char_getup).apply {
                 setAudioAttributes(
                     AudioAttributes.Builder()
                         .setUsage(AudioAttributes.USAGE_ALARM)
@@ -95,11 +92,30 @@ class AlarmRingService : Service() {
                         .build()
                 )
                 isLooping = true
-                prepare()
                 start()
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            // Fallback: System Alarm Sound
+            try {
+                val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                    ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+                mediaPlayer = MediaPlayer().apply {
+                    setDataSource(applicationContext, alarmUri)
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .build()
+                )
+                    isLooping = true
+                    prepare()
+                    start()
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
         }
     }
 
