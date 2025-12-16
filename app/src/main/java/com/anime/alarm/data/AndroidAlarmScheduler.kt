@@ -20,7 +20,25 @@ class AndroidAlarmScheduler(
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("ALARM_ID", alarm.id)
             putExtra("ALARM_LABEL", alarm.label)
-            putExtra("ALARM_CHALLENGE", alarm.challenge) // Pass the challenge object
+            
+            // Safe Primitive Passing to avoid Parcelable Crashes with Sealed Classes
+            when (val c = alarm.challenge) {
+                is com.anime.alarm.data.model.AlarmChallenge.ShakeChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "SHAKE")
+                    putExtra("CHALLENGE_VAL", c.shakesRequired)
+                }
+                is com.anime.alarm.data.model.AlarmChallenge.MathChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "MATH")
+                    putExtra("CHALLENGE_VAL", c.difficulty.ordinal)
+                }
+                is com.anime.alarm.data.model.AlarmChallenge.MemoryChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "MEMORY")
+                    putExtra("CHALLENGE_VAL", c.numRounds)
+                }
+                else -> {
+                    putExtra("CHALLENGE_TYPE", "NONE")
+                }
+            }
         }
         
         // Flag immutable wajib di Android 12+

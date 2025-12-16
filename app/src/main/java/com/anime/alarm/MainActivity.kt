@@ -34,6 +34,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
+import com.anime.alarm.data.model.MathDifficulty // Add this import
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,13 +70,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // Check if we were launched by an alarm intent
-                    val challenge = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        intent.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        intent.getParcelableExtra("ALARM_CHALLENGE") as? AlarmChallenge
-                    } ?: AlarmChallenge.None
+                    // Reconstruct challenge from primitives to avoid Parcelable crash with Sealed Classes
+                    val challengeType = intent.getStringExtra("CHALLENGE_TYPE")
+                    val challengeVal = intent.getIntExtra("CHALLENGE_VAL", 0)
+
+                    val challenge = when (challengeType) {
+                        "SHAKE" -> AlarmChallenge.ShakeChallenge(challengeVal)
+                        "MATH" -> AlarmChallenge.MathChallenge(MathDifficulty.values().getOrElse(challengeVal) { MathDifficulty.EASY })
+                        "MEMORY" -> AlarmChallenge.MemoryChallenge(challengeVal)
+                        else -> AlarmChallenge.None
+                    }
 
                     val alarmId = intent.getIntExtra("ALARM_ID", -1)
 

@@ -68,86 +68,23 @@ class AlarmRingService : Service() {
         return START_STICKY
     }
 
+import com.anime.alarm.data.model.MathDifficulty // Add this import
+
+// ...
+
     private fun extractChallenge(intent: Intent): AlarmChallenge {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("ALARM_CHALLENGE", AlarmChallenge::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra("ALARM_CHALLENGE") as? AlarmChallenge
-        } ?: AlarmChallenge.None
-    }
-
-    private fun startRinging() {
-        try {
-            // Priority 1: Play Anime Character Voice (Ara Ara~)
-            mediaPlayer = MediaPlayer.create(applicationContext, R.raw.char_getup).apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build()
-                )
-                isLooping = true
-                start()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            // Fallback: System Alarm Sound
-            try {
-                val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                    ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-                mediaPlayer = MediaPlayer().apply {
-                    setDataSource(applicationContext, alarmUri)
-                    setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_ALARM)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                            .build()
-                )
-                    isLooping = true
-                    prepare()
-                    start()
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
+        val type = intent.getStringExtra("CHALLENGE_TYPE") ?: "NONE"
+        val value = intent.getIntExtra("CHALLENGE_VAL", 0)
+        
+        return when (type) {
+            "SHAKE" -> AlarmChallenge.ShakeChallenge(value)
+            "MATH" -> AlarmChallenge.MathChallenge(MathDifficulty.values().getOrElse(value) { MathDifficulty.EASY })
+            "MEMORY" -> AlarmChallenge.MemoryChallenge(value)
+            else -> AlarmChallenge.None
         }
     }
 
-    private fun startVibrating() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibrator = vibratorManager.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        }
-
-        val pattern = longArrayOf(0, 1000, 1000)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator?.vibrate(VibrationEffect.createWaveform(pattern, 0))
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator?.vibrate(pattern, 0)
-        }
-    }
-
-    private fun stopRinging() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
-
-        vibrator?.cancel()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopRinging()
-        if (wakeLock?.isHeld == true) {
-            wakeLock?.release()
-        }
-    }
+    // ...
 
     private fun buildNotification(label: String, alarmId: Int, challenge: AlarmChallenge): Notification {
         val channelId = "ALARM_SERVICE_CHANNEL"
@@ -169,7 +106,25 @@ class AlarmRingService : Service() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra("ALARM_ID", alarmId)
             putExtra("ALARM_LABEL", label)
-            putExtra("ALARM_CHALLENGE", challenge)
+            
+            // Pass Primitives to MainActivity
+            when (challenge) {
+                is AlarmChallenge.ShakeChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "SHAKE")
+                    putExtra("CHALLENGE_VAL", challenge.shakesRequired)
+                }
+                is AlarmChallenge.MathChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "MATH")
+                    putExtra("CHALLENGE_VAL", challenge.difficulty.ordinal)
+                }
+                is AlarmChallenge.MemoryChallenge -> {
+                    putExtra("CHALLENGE_TYPE", "MEMORY")
+                    putExtra("CHALLENGE_VAL", challenge.numRounds)
+                }
+                else -> {
+                    putExtra("CHALLENGE_TYPE", "NONE")
+                }
+            }
         }
         val pendingIntent = PendingIntent.getActivity(
             this, alarmId, intent,
