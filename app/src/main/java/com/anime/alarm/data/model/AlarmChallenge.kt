@@ -17,8 +17,9 @@ sealed class AlarmChallenge : Parcelable {
     data class MemoryChallenge(val numRounds: Int) : AlarmChallenge()
 }
 
-enum class MathDifficulty {
-    EASY, 
-    MEDIUM, 
+@Parcelize
+enum class MathDifficulty : Parcelable {
+    EASY,
+    MEDIUM,
     HARD
 }
