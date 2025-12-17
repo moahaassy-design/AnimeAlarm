@@ -107,9 +107,14 @@ fun AlarmEntryScreen(
             }
             
             // 2. Label Input
+            val maxLength = 30
             OutlinedTextField(
                 value = alarmUiState.label,
-                onValueChange = { viewModel.updateUiState(alarmUiState.copy(label = it)) },
+                onValueChange = {
+                    if (it.length <= maxLength) {
+                        viewModel.updateUiState(alarmUiState.copy(label = it))
+                    }
+                },
                 label = { Text("Alarm Label") },
                 placeholder = { Text("Wake up, Senpai!") },
                 leadingIcon = { Icon(Icons.Default.Create, contentDescription = null, tint = SakuraDeep) },
@@ -120,7 +125,14 @@ fun AlarmEntryScreen(
                     unfocusedBorderColor = SakuraPink,
                     focusedLabelColor = DeepPurple
                 ),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                supportingText = {
+                    Text(
+                        text = "${alarmUiState.label.length} / $maxLength",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.End
+                    )
+                }
             )
 
             // 3. Challenge Selection Title
