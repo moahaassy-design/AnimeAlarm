@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -86,6 +89,8 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,9 +129,23 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(
+                        alarm = alarm,
+                        onDelete = { alarmToDelete = it },
+                        onToggle = onToggle
+                    )
                 }
             }
+        }
+
+        alarmToDelete?.let { alarm ->
+            DeleteConfirmationDialog(
+                onConfirm = {
+                    onDelete(alarm)
+                    alarmToDelete = null
+                },
+                onDismiss = { alarmToDelete = null }
+            )
         }
     }
 }
@@ -190,4 +209,28 @@ fun AlarmItem(
             }
         }
     }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete Alarm") },
+        text = { Text("Are you sure you want to delete this alarm?") },
+        modifier = modifier,
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
