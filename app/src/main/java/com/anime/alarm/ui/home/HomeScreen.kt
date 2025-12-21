@@ -183,7 +183,7 @@ fun AlarmItem(
                 IconButton(onClick = { onDelete(alarm) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = "Delete alarm for ${alarm.label}",
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
