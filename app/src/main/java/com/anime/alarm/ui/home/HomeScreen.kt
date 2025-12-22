@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -39,6 +42,7 @@ fun HomeScreen(
     navigateToShop: () -> Unit = {} // Add new callback
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+    var showDeleteConfirmationDialog by remember { mutableStateOf<Alarm?>(null) }
 
     Scaffold(
         topBar = {
@@ -71,11 +75,46 @@ fun HomeScreen(
         HomeBody(
             alarmList = homeUiState.alarmList,
             currentCharacter = homeUiState.currentCharacter,
-            onDelete = viewModel::deleteAlarm,
+            onDelete = { showDeleteConfirmationDialog = it },
             onToggle = viewModel::toggleAlarm,
             modifier = modifier.padding(innerPadding)
         )
     }
+
+    val alarmToDelete = showDeleteConfirmationDialog
+    if (alarmToDelete != null) {
+        AlarmDeleteDialog(
+            alarm = alarmToDelete,
+            onConfirm = {
+                viewModel.deleteAlarm(alarmToDelete)
+                showDeleteConfirmationDialog = null
+            },
+            onDismiss = { showDeleteConfirmationDialog = null }
+        )
+    }
+}
+
+@Composable
+private fun AlarmDeleteDialog(
+    alarm: Alarm,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete Alarm") },
+        text = { Text("Are you sure you want to delete the alarm for ${alarm.label} at ${String.format(Locale.getDefault(), "%02d:%02d", alarm.hour, alarm.minute)}?") },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable
