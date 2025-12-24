@@ -19,6 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -138,6 +142,8 @@ fun AlarmItem(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
@@ -180,7 +186,7 @@ fun AlarmItem(
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onDelete(alarm) }) {
+                IconButton(onClick = { showDialog = true }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",
@@ -189,5 +195,28 @@ fun AlarmItem(
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Delete Alarm") },
+            text = { Text("Are you sure you want to delete this alarm?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onDelete(alarm)
+                        showDialog = false
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
