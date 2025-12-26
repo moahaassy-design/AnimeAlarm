@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -86,6 +89,31 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    if (alarmToDelete != null) {
+        AlertDialog(
+            onDismissRequest = { alarmToDelete = null },
+            title = { Text("Delete Alarm") },
+            text = { Text("Are you sure you want to delete this alarm?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        alarmToDelete?.let(onDelete)
+                        alarmToDelete = null
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { alarmToDelete = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,7 +152,11 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(
+                        alarm = alarm,
+                        onDeleteClick = { alarmToDelete = it },
+                        onToggle = onToggle
+                    )
                 }
             }
         }
@@ -134,7 +166,7 @@ fun HomeBody(
 @Composable
 fun AlarmItem(
     alarm: Alarm,
-    onDelete: (Alarm) -> Unit,
+    onDeleteClick: (Alarm) -> Unit,
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -180,7 +212,7 @@ fun AlarmItem(
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onDelete(alarm) }) {
+                IconButton(onClick = { onDeleteClick(alarm) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",
