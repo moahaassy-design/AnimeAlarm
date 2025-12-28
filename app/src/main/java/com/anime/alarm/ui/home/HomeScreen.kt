@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -86,6 +89,14 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    val onDeleteRequest = { alarm: Alarm ->
+        alarmToDelete = alarm
+        showDeleteConfirmation = true
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,11 +135,52 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(alarm = alarm, onDelete = onDeleteRequest, onToggle = onToggle)
                 }
             }
         }
+
+        if (showDeleteConfirmation) {
+            DeleteConfirmationDialog(
+                onConfirm = {
+                    alarmToDelete?.let(onDelete)
+                    showDeleteConfirmation = false
+                    alarmToDelete = null
+                },
+                onDismiss = {
+                    showDeleteConfirmation = false
+                    alarmToDelete = null
+                }
+            )
+        }
     }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Confirm Deletion") },
+        text = { Text("Are you sure you want to delete this alarm?") },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable
