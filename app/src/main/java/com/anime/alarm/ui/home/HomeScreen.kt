@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -86,6 +89,9 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,8 +130,30 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(
+                        alarm = alarm,
+                        onDelete = {
+                            alarmToDelete = it
+                            showDeleteConfirmation = true
+                        },
+                        onToggle = onToggle
+                    )
                 }
+            }
+        }
+
+        if (showDeleteConfirmation) {
+            alarmToDelete?.let { alarm ->
+                DeleteConfirmationDialog(
+                    alarm = alarm,
+                    onConfirm = {
+                        onDelete(alarm)
+                        showDeleteConfirmation = false
+                    },
+                    onDismiss = {
+                        showDeleteConfirmation = false
+                    }
+                )
             }
         }
     }
@@ -190,4 +218,30 @@ fun AlarmItem(
             }
         }
     }
+}
+
+@Composable
+fun DeleteConfirmationDialog(
+    alarm: Alarm,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete Alarm") },
+        text = { Text("Are you sure you want to delete the alarm for ${String.format(Locale.getDefault(), "%02d:%02d", alarm.hour, alarm.minute)}?") },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+            ) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
