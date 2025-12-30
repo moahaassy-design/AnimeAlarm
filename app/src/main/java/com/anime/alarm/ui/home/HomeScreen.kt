@@ -14,10 +14,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
+import com.anime.alarm.R
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +44,32 @@ fun HomeScreen(
     navigateToShop: () -> Unit = {} // Add new callback
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    alarmToDelete?.let { alarm ->
+        AlertDialog(
+            onDismissRequest = { alarmToDelete = null },
+            title = { Text(text = stringResource(R.string.delete_alarm_dialog_title)) },
+            text = { Text(text = stringResource(R.string.delete_alarm_dialog_message)) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.deleteAlarm(alarm)
+                        alarmToDelete = null
+                    }
+                ) {
+                    Text(stringResource(R.string.delete_alarm_dialog_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { alarmToDelete = null }
+                ) {
+                    Text(stringResource(R.string.delete_alarm_dialog_cancel))
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -71,7 +102,7 @@ fun HomeScreen(
         HomeBody(
             alarmList = homeUiState.alarmList,
             currentCharacter = homeUiState.currentCharacter,
-            onDelete = viewModel::deleteAlarm,
+            onDelete = { alarmToDelete = it },
             onToggle = viewModel::toggleAlarm,
             modifier = modifier.padding(innerPadding)
         )
