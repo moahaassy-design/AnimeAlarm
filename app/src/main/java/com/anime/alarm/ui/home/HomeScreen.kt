@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -86,6 +89,28 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    val openDialog = { alarm: Alarm ->
+        alarmToDelete = alarm
+        showDialog = true
+    }
+
+    if (showDialog) {
+        DeleteConfirmationDialog(
+            onConfirm = {
+                alarmToDelete?.let { onDelete(it) }
+                showDialog = false
+                alarmToDelete = null
+            },
+            onDismiss = {
+                showDialog = false
+                alarmToDelete = null
+            }
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,7 +149,11 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(
+                        alarm = alarm,
+                        onDeleteRequest = { openDialog(alarm) },
+                        onToggle = onToggle
+                    )
                 }
             }
         }
@@ -134,7 +163,7 @@ fun HomeBody(
 @Composable
 fun AlarmItem(
     alarm: Alarm,
-    onDelete: (Alarm) -> Unit,
+    onDeleteRequest: () -> Unit,
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -167,7 +196,7 @@ fun AlarmItem(
                     color = MaterialTheme.colorScheme.secondary
                 )
             }
-            
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Switch(
                     checked = alarm.isActive,
@@ -180,7 +209,7 @@ fun AlarmItem(
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onDelete(alarm) }) {
+                IconButton(onClick = onDeleteRequest) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = "Delete",
@@ -190,4 +219,31 @@ fun AlarmItem(
             }
         }
     }
+}
+
+@Composable
+fun DeleteConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Confirm Deletion") },
+        text = { Text("Are you sure you want to delete this alarm?") },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
