@@ -14,14 +14,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.anime.alarm.R
 import com.anime.alarm.data.Alarm
 import com.anime.alarm.data.model.Character
 import com.anime.alarm.ui.AppViewModelProvider
@@ -138,6 +143,33 @@ fun AlarmItem(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(stringResource(R.string.delete_alarm_dialog_title)) },
+            text = { Text(stringResource(R.string.delete_alarm_dialog_text)) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onDelete(alarm)
+                        showDialog = false
+                    }
+                ) {
+                    Text(stringResource(R.string.delete_alarm_dialog_confirm_button))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showDialog = false }
+                ) {
+                    Text(stringResource(R.string.delete_alarm_dialog_cancel_button))
+                }
+            }
+        )
+    }
+
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
@@ -180,10 +212,10 @@ fun AlarmItem(
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onDelete(alarm) }) {
+                IconButton(onClick = { showDialog = true }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.delete_alarm_content_description),
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
