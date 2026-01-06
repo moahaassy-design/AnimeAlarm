@@ -14,14 +14,19 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.anime.alarm.R
 import com.anime.alarm.data.Alarm
 import com.anime.alarm.data.model.Character
 import com.anime.alarm.ui.AppViewModelProvider
@@ -86,6 +91,33 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    if (alarmToDelete != null) {
+        AlertDialog(
+            onDismissRequest = { alarmToDelete = null },
+            title = { Text(stringResource(R.string.confirm_delete_title)) },
+            text = { Text(stringResource(R.string.confirm_delete_message)) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        alarmToDelete?.let(onDelete)
+                        alarmToDelete = null
+                    }
+                ) {
+                    Text(stringResource(R.string.delete))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { alarmToDelete = null }
+                ) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,7 +156,11 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(
+                        alarm = alarm,
+                        onDeleteRequest = { alarmToDelete = it },
+                        onToggle = onToggle
+                    )
                 }
             }
         }
@@ -134,7 +170,7 @@ fun HomeBody(
 @Composable
 fun AlarmItem(
     alarm: Alarm,
-    onDelete: (Alarm) -> Unit,
+    onDeleteRequest: (Alarm) -> Unit,
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -180,10 +216,10 @@ fun AlarmItem(
                     )
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                IconButton(onClick = { onDelete(alarm) }) {
+                IconButton(onClick = { onDeleteRequest(alarm) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.delete),
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
