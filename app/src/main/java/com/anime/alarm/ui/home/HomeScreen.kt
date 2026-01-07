@@ -14,6 +14,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,6 +32,10 @@ import com.anime.alarm.ui.components.AdBanner
 import com.anime.alarm.ui.components.MascotEmotion
 import com.anime.alarm.ui.components.WaguriMascot
 import java.util.Locale
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
+import com.anime.alarm.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,6 +46,24 @@ fun HomeScreen(
     navigateToShop: () -> Unit = {} // Add new callback
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
+    if (showDialog) {
+        alarmToDelete?.let {
+            DeleteConfirmationDialog(
+                onConfirm = {
+                    viewModel.deleteAlarm(it)
+                    showDialog = false
+                    alarmToDelete = null
+                },
+                onDismiss = {
+                    showDialog = false
+                    alarmToDelete = null
+                }
+            )
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -71,7 +96,10 @@ fun HomeScreen(
         HomeBody(
             alarmList = homeUiState.alarmList,
             currentCharacter = homeUiState.currentCharacter,
-            onDelete = viewModel::deleteAlarm,
+            onDelete = {
+                alarmToDelete = it
+                showDialog = true
+            },
             onToggle = viewModel::toggleAlarm,
             modifier = modifier.padding(innerPadding)
         )
@@ -129,6 +157,33 @@ fun HomeBody(
             }
         }
     }
+}
+
+@Composable
+fun DeleteConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.delete_alarm_dialog_title)) },
+        text = { Text(stringResource(R.string.delete_alarm_dialog_message)) },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.error
+                )
+            ) {
+                Text(stringResource(R.string.delete_alarm_dialog_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.delete_alarm_dialog_cancel))
+            }
+        }
+    )
 }
 
 @Composable
