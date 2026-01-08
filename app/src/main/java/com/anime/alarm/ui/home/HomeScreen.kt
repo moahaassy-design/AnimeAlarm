@@ -14,10 +14,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anime.alarm.data.Alarm
 import com.anime.alarm.data.model.Character
 import com.anime.alarm.ui.AppViewModelProvider
+import com.anime.alarm.R
 import com.anime.alarm.ui.components.AdBanner
 import com.anime.alarm.ui.components.MascotEmotion
 import com.anime.alarm.ui.components.WaguriMascot
@@ -86,6 +91,8 @@ fun HomeBody(
     onToggle: (Alarm, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var alarmToDelete by remember { mutableStateOf<Alarm?>(null) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -124,9 +131,34 @@ fun HomeBody(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(alarmList, key = { it.id }) { alarm ->
-                    AlarmItem(alarm = alarm, onDelete = onDelete, onToggle = onToggle)
+                    AlarmItem(alarm = alarm, onDelete = { alarmToDelete = alarm }, onToggle = onToggle)
                 }
             }
+        }
+
+        if (alarmToDelete != null) {
+            AlertDialog(
+                onDismissRequest = { alarmToDelete = null },
+                title = { Text(stringResource(R.string.delete_alarm_confirmation_title)) },
+                text = { Text(stringResource(R.string.delete_alarm_confirmation_message)) },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            onDelete(alarmToDelete!!)
+                            alarmToDelete = null
+                        }
+                    ) {
+                        Text(stringResource(R.string.delete))
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { alarmToDelete = null }
+                    ) {
+                        Text(stringResource(R.string.cancel))
+                    }
+                }
+            )
         }
     }
 }
